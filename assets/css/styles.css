@@ -324,7 +324,7 @@ code { font-family: var(--mono); }
 }
 .node svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .n1 { left: 50%; top: 2%; }
-.n2 { left: 93%; top: 26%; animation-delay: -1s; }
+.n2 { left: 95%; top: 34%; animation-delay: -1s; }
 .n3 { left: 96%; top: 66%; animation-delay: -2s; }
 .n4 { left: 50%; top: 98%; animation-delay: -3s; }
 .n5 { left: 7%;  top: 72%; animation-delay: -1.5s; }
@@ -1117,8 +1117,9 @@ main { position: relative; }
   .chip small { font-size: 9.5px; }
   .c1 { left: -3%; top: 7%; }
   .c2 { right: -4%; top: 70%; }
-  .c3 { left: -4%; top: 91%; }
+  .c3 { left: -4%; top: 93%; }
   .n4 { display: none; }
+  .n3 { top: 55%; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }

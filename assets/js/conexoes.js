@@ -43,8 +43,13 @@
       const side = i % 2 ? 1 : -1;
       const mx = (sx + p.x) / 2 - uy * len * 0.12 * side;
       const my = (sy + p.y) / 2 + ux * len * 0.12 * side;
+      // a linha termina na borda da peça, não no meio dela (assim o pulso não aparece por dentro do vidro)
+      const er = el.getBoundingClientRect();
+      const hw = er.width / 2 + 2, hh = er.height / 2 + 2;
+      const tEdge = Math.min(Math.abs(ux) > 1e-3 ? hw / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-3 ? hh / Math.abs(uy) : Infinity);
+      const ex = p.x - ux * tEdge, ey = p.y - uy * tEdge;
       const path = document.createElementNS(NS, 'path');
-      path.setAttribute('d', `M${sx.toFixed(1)} ${sy.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`);
+      path.setAttribute('d', `M${sx.toFixed(1)} ${sy.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`);
       path.setAttribute('class', el.classList.contains('chip') ? 'link link-out' : 'link');
       svg.appendChild(path);
       paths.set(el, path);
