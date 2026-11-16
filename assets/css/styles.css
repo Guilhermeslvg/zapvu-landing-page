@@ -846,6 +846,102 @@ main { position: relative; }
 :root.v-aneis[data-theme="dark"] .card, :root.v-aneis[data-theme="dark"] .faq details { background: rgb(10 26 12 / 0.5); border-color: rgb(213 255 38 / 0.10); }
 .v-aneis .stats { border-color: var(--line); }
 
+/* =========================================================
+   Interruptor escuro/claro de vidro líquido
+   Pílula colorida que brilha + bolha de vidro que desliza e estica no meio
+   ========================================================= */
+.theme-switch {
+  position: relative;
+  width: 112px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  flex: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.ts-track {
+  position: absolute;
+  inset: 5px 0;
+  border-radius: 999px;
+  overflow: hidden;
+  transition: background 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.ts-label {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: opacity 0.35s var(--ease), translate 0.45s var(--ease);
+}
+.ts-l-dark { left: 14px; color: #EFFFB0; }
+.ts-l-light { right: 14px; color: var(--olive); }
+
+.ts-knob {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  /* lente de vidro: quase transparente, borda clara e reflexo em cima */
+  background:
+    radial-gradient(60% 40% at 50% 18%, rgb(255 255 255 / 0.55), transparent 70%),
+    radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.10), rgb(255 255 255 / 0.04) 70%);
+  border: 1px solid rgb(255 255 255 / 0.7);
+  box-shadow:
+    inset 0 -6px 10px rgb(255 255 255 / 0.18),
+    inset 0 2px 4px rgb(255 255 255 / 0.5),
+    0 6px 16px rgb(0 0 0 / 0.28);
+  backdrop-filter: blur(1.5px) saturate(180%) brightness(1.15);
+  -webkit-backdrop-filter: blur(1.5px) saturate(180%) brightness(1.15);
+  transition: translate 0.55s cubic-bezier(0.5, 1.5, 0.45, 1);
+}
+.ts-knob svg { position: absolute; width: 20px; height: 20px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: opacity 0.3s var(--ease), rotate 0.5s var(--ease); }
+
+/* escuro: pílula oliva com brilho lima, bolha à direita com a lua */
+:root[data-theme="dark"] .ts-track {
+  background: linear-gradient(90deg, #3D4A06, #6E8A00);
+  box-shadow: 0 0 18px rgb(213 255 38 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.25), inset 0 -2px 6px rgb(0 0 0 / 0.35);
+}
+:root[data-theme="dark"] .ts-knob { translate: 66px 0; }
+:root[data-theme="dark"] .ts-moon { stroke: var(--lime); fill: rgb(213 255 38 / 0.25); opacity: 1; }
+:root[data-theme="dark"] .ts-sun { opacity: 0; rotate: -90deg; stroke: var(--olive); }
+:root[data-theme="dark"] .ts-l-light { opacity: 0; translate: 10px -50%; }
+
+/* claro: pílula lima brilhando, bolha à esquerda com o sol */
+:root[data-theme="light"] .ts-track {
+  background: linear-gradient(90deg, #C6F00F, #E4FF6A);
+  box-shadow: 0 0 20px rgb(213 255 38 / 0.75), inset 0 1px 0 rgb(255 255 255 / 0.7), inset 0 -2px 6px rgb(110 140 0 / 0.35);
+}
+:root[data-theme="light"] .ts-knob { translate: 0 0; border-color: rgb(255 255 255 / 0.95); box-shadow: inset 0 -6px 10px rgb(255 255 255 / 0.3), inset 0 2px 4px #fff, 0 6px 16px rgb(30 33 4 / 0.18); }
+:root[data-theme="light"] .ts-sun { stroke: var(--olive); opacity: 1; }
+:root[data-theme="light"] .ts-moon { opacity: 0; rotate: 90deg; stroke: var(--lime); }
+:root[data-theme="light"] .ts-l-dark { opacity: 0; translate: -10px -50%; }
+
+/* a bolha estica no meio do caminho, como gota */
+.theme-switch.is-moving .ts-knob { animation: estica 0.55s var(--ease); }
+@keyframes estica {
+  0%   { scale: 1 1; }
+  40%  { scale: 1.32 0.86; }
+  75%  { scale: 0.94 1.05; }
+  100% { scale: 1 1; }
+}
+.theme-switch:hover .ts-knob { box-shadow: inset 0 -6px 10px rgb(255 255 255 / 0.22), inset 0 2px 4px rgb(255 255 255 / 0.6), 0 8px 20px rgb(0 0 0 / 0.3); }
+.theme-switch:focus-visible { outline-offset: 4px; border-radius: 999px; }
+
+@media (max-width: 560px) {
+  .theme-switch { width: 96px; height: 42px; }
+  .ts-knob { width: 42px; height: 42px; }
+  :root[data-theme="dark"] .ts-knob { translate: 54px 0; }
+  .ts-label { font-size: 12px; }
+  .ts-l-dark { left: 11px; } .ts-l-light { right: 11px; }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
   .js .hero-copy > *, .js .hero-visual { opacity: 1; translate: 0 0; }

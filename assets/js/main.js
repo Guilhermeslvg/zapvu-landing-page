@@ -5,14 +5,23 @@ requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('read
 
 // Fundo preto / branco
 const toggle = document.querySelector('[data-theme-toggle]');
+const isSwitch = toggle.getAttribute('role') === 'switch';
 function setLabel() {
-  toggle.setAttribute('aria-label', root.dataset.theme === 'dark' ? 'Mudar para fundo branco' : 'Mudar para fundo preto');
+  const dark = root.dataset.theme === 'dark';
+  if (isSwitch) {
+    toggle.setAttribute('aria-checked', String(dark));
+    toggle.setAttribute('aria-label', 'Fundo escuro');
+  } else {
+    toggle.setAttribute('aria-label', dark ? 'Mudar para fundo branco' : 'Mudar para fundo preto');
+  }
 }
 setLabel();
 toggle.addEventListener('click', () => {
   root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
   try { localStorage.setItem('zapvu-tema', root.dataset.theme); } catch (e) {}
   setLabel();
+  toggle.classList.remove('is-moving'); void toggle.offsetWidth; toggle.classList.add('is-moving');
+  setTimeout(() => toggle.classList.remove('is-moving'), 600);
 });
 
 // Menu no celular
