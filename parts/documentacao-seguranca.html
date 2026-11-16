@@ -1,0 +1,281 @@
+    <!-- ============ DOCUMENTAÇÃO / CÓDIGO ============ -->
+    <section class="section section-code" id="documentacao">
+      <span class="blob b-doc" aria-hidden="true"></span>
+      <div class="container code-grid">
+        <div class="code-copy">
+          <div class="dx-top">
+          <p class="kicker">Documentação</p>
+          <h2>Uma chamada, uma mensagem</h2>
+          <p class="section-sub">Troque a chave e o número pelos seus e rode. Funciona com qualquer linguagem que faça uma requisição HTTP.</p>
+          <ul class="dx-points">
+            <li>
+              <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg></span>
+              <span>Chaves <code>zv_</code> por número ou com acesso a todos</span>
+            </li>
+            <li>
+              <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg></span>
+              <span>Chave de idempotência para não duplicar envios</span>
+            </li>
+            <li>
+              <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="3"/><path d="M11 18h2"/></svg></span>
+              <span>Número com ou sem o 9º dígito</span>
+            </li>
+          </ul>
+          </div>
+          <div class="dx-foot">
+            <div class="dx-base">
+              <span class="dx-base-k">Base URL e cabeçalhos</span>
+              <code>https://api.zapvu.com.br/v1</code>
+              <dl class="dx-hdrs">
+                <div><dt>Authorization</dt><dd>Bearer zv_…</dd></div>
+                <div><dt>Idempotency-Key</dt><dd>pedido-4821</dd></div>
+                <div><dt>Content-Type</dt><dd>application/json</dd></div>
+              </dl>
+              <ul class="dx-langs" aria-label="Exemplos disponíveis"><li>cURL</li><li>Node.js</li><li>Python</li><li>PHP</li></ul>
+            </div>
+            <a href="#documentacao" class="btn btn-ghost">Ler a documentação completa</a>
+          </div>
+        </div>
+
+        <div class="dx-flow">
+          <span class="dx-rail" aria-hidden="true"><i></i></span>
+
+          <!-- 1. a chamada -->
+          <div class="dx-step">
+            <span class="gem gem-n" aria-hidden="true">1</span>
+            <div class="code-box dx-card">
+              <div class="dx-head">
+                <div>
+                  <p class="dx-k">Você chama</p>
+                  <h3>Uma requisição</h3>
+                </div>
+                <div class="code-tabs" role="tablist" aria-label="Linguagem do exemplo">
+                  <button role="tab" aria-selected="true" aria-controls="tab-curl" id="t-curl">cURL</button>
+                  <button role="tab" aria-selected="false" aria-controls="tab-node" id="t-node" tabindex="-1">Node.js</button>
+                  <button role="tab" aria-selected="false" aria-controls="tab-py" id="t-py" tabindex="-1">Python</button>
+                  <button role="tab" aria-selected="false" aria-controls="tab-php" id="t-php" tabindex="-1">PHP</button>
+                </div>
+              </div>
+              <div class="dx-term">
+                <div class="dx-bar">
+                  <span class="dx-route"><b>POST</b> /v1/messages/text</span>
+                  <span class="dx-hint" aria-hidden="true">&harr;</span>
+                  <button class="copy" type="button" data-copy>Copiar</button>
+                </div>
+<pre tabindex="0" role="tabpanel" id="tab-curl" aria-labelledby="t-curl"><code>curl -X POST https://api.zapvu.com.br/v1/messages/text \
+  -H <span class="c-s">"Authorization: Bearer zv_SUA_CHAVE"</span> \
+  -H <span class="c-s">"Idempotency-Key: pedido-4821"</span> \
+  -H <span class="c-s">"Content-Type: application/json"</span> \
+  -d <span class="c-s">'{
+    "instance": "loja-centro",
+    "to": "5531990000000",
+    "text": "Oi, Carla! Seu pedido saiu para entrega."
+  }'</span></code></pre>
+<pre tabindex="0" role="tabpanel" id="tab-node" aria-labelledby="t-node" hidden><code><span class="c-k">const</span> res = <span class="c-k">await</span> fetch(<span class="c-s">"https://api.zapvu.com.br/v1/messages/text"</span>, {
+  method: <span class="c-s">"POST"</span>,
+  headers: {
+    Authorization: <span class="c-s">`Bearer ${process.env.ZAPVU_KEY}`</span>,
+    <span class="c-s">"Idempotency-Key"</span>: <span class="c-s">"pedido-4821"</span>,
+    <span class="c-s">"Content-Type"</span>: <span class="c-s">"application/json"</span>,
+  },
+  body: JSON.stringify({
+    instance: <span class="c-s">"loja-centro"</span>,
+    to: <span class="c-s">"5531990000000"</span>,
+    text: <span class="c-s">"Oi, Carla! Seu pedido saiu para entrega."</span>,
+  }),
+});
+console.log(<span class="c-k">await</span> res.json());</code></pre>
+<pre tabindex="0" role="tabpanel" id="tab-py" aria-labelledby="t-py" hidden><code><span class="c-k">import</span> os, requests
+
+res = requests.post(
+    <span class="c-s">"https://api.zapvu.com.br/v1/messages/text"</span>,
+    headers={
+        <span class="c-s">"Authorization"</span>: <span class="c-s">f"Bearer {os.environ['ZAPVU_KEY']}"</span>,
+        <span class="c-s">"Idempotency-Key"</span>: <span class="c-s">"pedido-4821"</span>,
+    },
+    json={
+        <span class="c-s">"instance"</span>: <span class="c-s">"loja-centro"</span>,
+        <span class="c-s">"to"</span>: <span class="c-s">"5531990000000"</span>,
+        <span class="c-s">"text"</span>: <span class="c-s">"Oi, Carla! Seu pedido saiu para entrega."</span>,
+    },
+)
+print(res.json())</code></pre>
+<pre tabindex="0" role="tabpanel" id="tab-php" aria-labelledby="t-php" hidden><code>$ch = curl_init(<span class="c-s">'https://api.zapvu.com.br/v1/messages/text'</span>);
+curl_setopt_array($ch, [
+  CURLOPT_POST =&gt; <span class="c-k">true</span>,
+  CURLOPT_RETURNTRANSFER =&gt; <span class="c-k">true</span>,
+  CURLOPT_HTTPHEADER =&gt; [
+    <span class="c-s">'Authorization: Bearer '</span> . getenv(<span class="c-s">'ZAPVU_KEY'</span>),
+    <span class="c-s">'Idempotency-Key: pedido-4821'</span>,
+    <span class="c-s">'Content-Type: application/json'</span>,
+  ],
+  CURLOPT_POSTFIELDS =&gt; json_encode([
+    <span class="c-s">'instance'</span> =&gt; <span class="c-s">'loja-centro'</span>,
+    <span class="c-s">'to'</span> =&gt; <span class="c-s">'5531990000000'</span>,
+    <span class="c-s">'text'</span> =&gt; <span class="c-s">'Oi, Carla! Seu pedido saiu para entrega.'</span>,
+  ]),
+]);
+echo curl_exec($ch);</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. a resposta -->
+          <div class="dx-step">
+            <span class="gem gem-n" aria-hidden="true">2</span>
+            <div class="dx-card dx-res">
+              <div class="dx-head">
+                <div>
+                  <p class="dx-k">O Zapvu responde na hora</p>
+                  <h3>A mensagem entra na fila</h3>
+                </div>
+                <span class="res-status">202 Accepted</span>
+              </div>
+              <div class="dx-body">
+                <div class="dx-term dx-term-sm"><pre><code>{
+  <span class="c-k">"id"</span>: <span class="c-s">"msg_7Hq2Lw9xT4"</span>,
+  <span class="c-k">"status"</span>: <span class="c-s">"queued"</span>
+}</code></pre></div>
+                <ol class="dx-track" aria-label="Caminho da mensagem">
+                  <li><i></i><b>na fila</b><small>salva no banco</small></li>
+                  <li><i></i><b>pausa humana</b><small>1,5–4 s</small></li>
+                  <li><i></i><b>enviada</b><small>sai pelo número</small></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. o webhook -->
+          <div class="dx-step">
+            <span class="gem gem-n" aria-hidden="true">3</span>
+            <div class="dx-card dx-hook">
+              <div class="dx-head">
+                <div>
+                  <p class="dx-k">Depois, no seu sistema</p>
+                  <h3>O webhook avisa que saiu</h3>
+                </div>
+                <span class="dx-sig"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>HMAC-SHA256</span>
+              </div>
+              <div class="dx-body">
+                <div class="dx-term dx-term-sm"><pre><code>{
+  <span class="c-k">"id"</span>: <span class="c-s">"msg_7Hq2Lw9xT4"</span>,
+  <span class="c-k">"status"</span>: <span class="c-s">"sent"</span>
+}</code></pre></div>
+                <div class="dx-retry">
+                  <p>Se o seu sistema não responder, o Zapvu tenta de novo: <strong>12 tentativas em cerca de 1 hora.</strong></p>
+                  <div class="dx-ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEGURANÇA ============ -->
+    <section class="section" id="seguranca">
+      <span class="blob b-seg alt" aria-hidden="true"></span>
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Segurança e operação</p>
+          <h2>Leve no servidor, rígida no acesso</h2>
+          <p class="section-sub">De fora até o seu número, cada acesso passa por quatro camadas. Por baixo, a auditoria registra tudo e o backup copia o banco todo dia.</p>
+        </header>
+
+        <div class="sg">
+          <div class="sg-main">
+          <svg class="sg-wires" aria-hidden="true" focusable="false"></svg>
+          <div class="sg-rings" aria-hidden="true">
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="ring r3"></div>
+            <div class="ring r4"></div>
+            <div class="core">
+              <span class="gem"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></span>
+              <span class="core-l"><small>seu número</small><code>loja-centro</code></span>
+            </div>
+            <span class="rl" data-l="1"><b>1</b>HTTPS</span>
+            <span class="rl" data-l="2"><b>2</b>Limites</span>
+            <span class="rl" data-l="3"><b>3</b>Painel</span>
+            <span class="rl" data-l="4"><b>4</b>Chave</span>
+          </div>
+
+          <ol class="sg-layers">
+            <li class="glass sg-layer" data-l="1">
+              <div class="sg-top">
+                <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></span>
+                <div><p class="sg-k">Camada 1</p><h3>HTTPS sempre</h3></div>
+              </div>
+              <p>Certificados emitidos e renovados sozinhos. Só as portas 80 e 443 ficam abertas.</p>
+              <div class="sg-viz v-ports">
+                <code class="https"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg>https://</code>
+                <span class="port on">80</span><span class="port on">443</span><span class="port off">demais fechadas</span><span class="cert">certificado renova sozinho</span>
+              </div>
+            </li>
+            <li class="glass sg-layer" data-l="2">
+              <div class="sg-top">
+                <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg></span>
+                <div><p class="sg-k">Camada 2</p><h3>Proteção contra abuso</h3></div>
+              </div>
+              <p>Limite de requisições e de tentativas de login, e bloqueio de webhooks que apontem para endereços internos.</p>
+              <div class="sg-viz v-abuso">
+                <div class="meter"><span>requisições</span><div class="bar"><i></i></div><em>no limite</em></div>
+                <div class="row"><code>hook → localhost</code><span class="tag">bloqueado</span></div>
+              </div>
+            </li>
+            <li class="glass sg-layer" data-l="3">
+              <div class="sg-top">
+                <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M17 4.5a3.5 3.5 0 0 1 0 7M21.5 20c0-2.8-1.7-4.8-4-5.6"/></svg></span>
+                <div><p class="sg-k">Camada 3</p><h3>Painel com papéis</h3></div>
+              </div>
+              <p>Admin, operador e visualizador. Senha com argon2id e sessão protegida contra CSRF.</p>
+              <div class="sg-viz v-papeis">
+                <span class="role on">admin</span><span class="role">operador</span><span class="role">visualizador</span>
+                <span class="extra"><span class="mono-tag">argon2id</span><span class="mono-tag">CSRF</span></span>
+              </div>
+            </li>
+            <li class="glass sg-layer" data-l="4">
+              <div class="sg-top">
+                <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg></span>
+                <div><p class="sg-k">Camada 4</p><h3>Chaves com escopo</h3></div>
+              </div>
+              <p>Uma chave pode gerenciar todos os números ou só um. A de um número não enxerga os outros. O banco guarda só o hash.</p>
+              <div class="sg-viz v-chaves">
+                <div class="row"><code>zv_••••admin</code><span class="tag">todos os números</span></div>
+                <div class="row"><code>zv_••••loja</code><span class="tag">só loja-centro</span></div>
+                <div class="row dim"><code>no banco</code><span class="hash">só o hash</span></div>
+              </div>
+            </li>
+          </ol>
+          </div>
+
+          <div class="sg-ops">
+            <article class="glass sg-under">
+              <div class="sg-op">
+                <div class="sg-top">
+                  <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+                  <div><p class="sg-k">Por baixo</p><h3>Auditoria de 90 dias</h3></div>
+                </div>
+                <p>Quem fez o quê, e quando, fica registrado por 90 dias.</p>
+                <ul class="sg-viz v-log">
+                  <li><span>admin</span><code>criou uma chave</code><time>09:12</time></li>
+                  <li><span>operador</span><code>reconectou o número</code><time>09:40</time></li>
+                  <li><span>admin</span><code>mudou um papel</code><time>10:05</time></li>
+                </ul>
+              </div>
+              <div class="sg-op">
+                <div class="sg-top">
+                  <span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg></span>
+                  <div><p class="sg-k">Por baixo</p><h3>Backup diário</h3></div>
+                </div>
+                <p>O banco é copiado todo dia, com 7 dias de retenção.</p>
+                <div class="sg-viz v-backup">
+                  <div class="days" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                  <div class="days-l"><span>há 6 dias</span><span>hoje</span></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>

@@ -1,0 +1,163 @@
+    <!-- ============ PLANOS ============ -->
+    <section class="section" id="planos">
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Planos</p>
+          <h2>Preço por número, mensagens à vontade</h2>
+          <p class="section-sub">Você paga pelos números conectados. Não existe cobrança por mensagem.</p>
+        </header>
+
+        <div class="pq" data-placeholder="precos">
+          <div class="pq-calc">
+            <label class="pq-label" for="pq-qtd">Quantos números você vai conectar?</label>
+
+            <div class="pq-count">
+              <button type="button" class="pq-step" data-pq-step="-1" aria-label="Menos um número">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg>
+              </button>
+              <div class="pq-big">
+                <output id="pq-out" for="pq-qtd">3</output>
+                <span id="pq-word">números</span>
+              </div>
+              <button type="button" class="pq-step" data-pq-step="1" aria-label="Mais um número">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+
+            <div class="pq-slider">
+              <input type="range" id="pq-qtd" min="1" max="50" value="3" aria-describedby="pq-faixa-desc">
+              <div class="pq-ticks" aria-hidden="true">
+                <span style="--p:0.0816">5</span><span style="--p:0.3878">20</span><span style="--p:1">50</span>
+              </div>
+            </div>
+
+            <div class="pq-tiers" role="group" aria-label="Faixas de preço por número">
+              <button type="button" class="pq-tier" data-min="1" data-max="4" data-price="39" aria-pressed="false">
+                <span class="pq-tier-r">1 a 4 números</span>
+                <strong>R$ 39</strong>
+                <span class="pq-tier-s">por número</span>
+              </button>
+              <button type="button" class="pq-tier" data-min="5" data-max="19" data-price="33" aria-pressed="false">
+                <span class="pq-tier-r">5 a 19 números</span>
+                <strong>R$ 33</strong>
+                <span class="pq-tier-s">por número</span>
+              </button>
+              <button type="button" class="pq-tier" data-min="20" data-max="50" data-price="27" aria-pressed="false">
+                <span class="pq-tier-r">20 a 50 números</span>
+                <strong>R$ 27</strong>
+                <span class="pq-tier-s">por número</span>
+              </button>
+            </div>
+            <p class="pq-hint" id="pq-faixa-desc">O preço da faixa vale para todos os números, não só para os que passam do limite.</p>
+          </div>
+
+          <aside class="pq-sum" aria-label="Resumo do plano">
+            <div class="pq-sum-top">
+              <span class="pq-tag">Seu plano</span>
+            </div>
+            <p class="pq-total"><span id="pq-total">R$ 117</span><small>por mês</small></p>
+            <p class="pq-unit" id="pq-unit">3 números × R$ 39</p>
+            <p class="pq-save" id="pq-save" hidden></p>
+            <div class="pq-rack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <p class="pq-sr" id="pq-sr" aria-live="polite"></p>
+            <a href="#criar-conta" class="btn btn-primary pq-cta">Testar grátis
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <p class="pq-fine">Valores de exemplo até a tabela oficial</p>
+          </aside>
+
+          <ul class="pq-incl" aria-label="O que está incluso em qualquer plano">
+            <li>
+              <span class="pq-gem"><svg viewBox="0 0 24 24"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/></svg></span>
+              <div><strong>Toda a API, em qualquer plano</strong><span>Nenhum recurso preso a faixa de preço.</span></div>
+            </li>
+            <li>
+              <span class="pq-gem"><svg viewBox="0 0 24 24"><path d="M4 12h5l2 5 3-10 2 5h4"/></svg></span>
+              <div><strong>Envio e recebimento sem taxa</strong><span>Enviar e receber não muda o valor do mês.</span></div>
+            </li>
+            <li>
+              <span class="pq-gem"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+              <div><strong>Webhooks assinados, com reenvio</strong><span>Até 12 tentativas em cerca de 1 hora.</span></div>
+            </li>
+            <li>
+              <span class="pq-gem"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><path d="M3.5 9.5h17M8.5 9.5v10"/></svg></span>
+              <div><strong>Painel para a equipe</strong><span>Números, chaves e usuários, com papel de admin, operador ou visualizador.</span></div>
+            </li>
+            <li>
+              <span class="pq-gem"><svg viewBox="0 0 24 24"><path d="M5 19 19 5"/><circle cx="7" cy="7" r="2.3"/><circle cx="17" cy="17" r="2.3"/></svg></span>
+              <div><strong>Desconto por quantidade</strong><span>Um degrau a partir de 5 números e outro a partir de 20.</span></div>
+            </li>
+            <li>
+              <span class="pq-gem"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h8"/><path d="m16 17 2 2 3.5-4"/></svg></span>
+              <div><strong>Fila de envio no banco</strong><span>As mensagens esperam na fila, com 1,5 a 4 segundos entre uma e outra.</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PERGUNTAS ============ -->
+    <section class="section" id="perguntas">
+      <span class="blob b-faq alt" aria-hidden="true"></span>
+      <div class="container faq-grid">
+        <div class="fq-side">
+          <header class="section-head">
+            <p class="kicker">Suporte</p>
+            <h2>Antes de conectar seu número</h2>
+            <p class="section-sub">As dúvidas que mais chegam antes do primeiro teste.</p>
+          </header>
+
+          <ul class="fq-facts" aria-label="Três fatos rápidos">
+            <li><code>webhook</code><span>até 12 tentativas em cerca de 1 hora</span></li>
+            <li><code>envio</code><span>pausa de 1,5 a 4 s entre mensagens</span></li>
+            <li><code>conexão</code><span>QR code ou código de 8 caracteres</span></li>
+          </ul>
+
+          <aside class="fq-help" aria-label="Falar com o suporte">
+            <span class="pq-gem"><svg viewBox="0 0 24 24"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-4.5 3.5V17H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8 10h8M8 13h5"/></svg></span>
+            <div class="fq-help-t">
+              <strong>Não achou sua dúvida?</strong>
+              <p>Chama o suporte no WhatsApp e conta o que você quer fazer.</p>
+            </div>
+            <a href="#suporte" class="btn btn-primary btn-sm" data-placeholder="contato">Falar com o suporte
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </aside>
+        </div>
+
+        <div class="faq">
+          <details name="faq" open>
+            <summary><span class="fq-q"><small>Oficial ou não</small>A Zapvu é a API oficial do WhatsApp?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>Não. Ela funciona como um WhatsApp Web automatizado: seu número se conecta como um aparelho, sem aprovação da Meta e sem modelo de mensagem aprovado. Por isso é mais barata e flexível. A Zapvu não tem ligação com a Meta nem com o WhatsApp.</p></div>
+          </details>
+          <details name="faq">
+            <summary><span class="fq-q"><small>Risco</small>Meu número pode ser bloqueado?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>Pode. O WhatsApp bloqueia números que parecem spam. O ritmo humano da Zapvu (pausa entre envios e “digitando”) reduz esse risco, mas nenhuma API não oficial consegue eliminá-lo. Mande só para quem espera falar com você.</p></div>
+          </details>
+          <details name="faq">
+            <summary><span class="fq-q"><small>Números</small>Posso conectar vários números?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>Pode. Cada número é uma instância, e você gerencia todas com uma chave de acesso geral ou dá a cada sistema uma chave que só enxerga o próprio número.</p></div>
+          </details>
+          <details name="faq">
+            <summary><span class="fq-q"><small>Preço</small>Vocês cobram por mensagem?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>Não. A cobrança é por número conectado. Mandar e receber mensagem não muda o valor do mês.</p></div>
+          </details>
+          <details name="faq">
+            <summary><span class="fq-q"><small>Webhook</small>E se meu sistema cair?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>A Zapvu tenta entregar o webhook de novo até 12 vezes ao longo de cerca de 1 hora. Os eventos ficam guardados e podem ser reenviados depois.</p></div>
+          </details>
+          <details name="faq">
+            <summary><span class="fq-q"><small>Repetição</small>Se eu repetir a mesma chamada, a mensagem sai duas vezes?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>Não. Mande uma chave de idempotência e a Zapvu reconhece a repetição. A mensagem sai uma vez só.</p></div>
+          </details>
+          <details name="faq">
+            <summary><span class="fq-q"><small>Conexão</small>Preciso de câmera para conectar?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>Não. Além do QR code, dá para conectar com um código de pareamento de 8 caracteres digitado no celular.</p></div>
+          </details>
+          <details name="faq">
+            <summary><span class="fq-q"><small>Queda</small>O que acontece se o número desconectar?</span><i class="fq-pm" aria-hidden="true"></i></summary>
+            <div class="fq-a"><p>A Zapvu tenta reconectar sozinha. Se não conseguir, ou se o WhatsApp derrubar o número, você recebe um aviso de desconexão ou de ban para agir rápido.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
