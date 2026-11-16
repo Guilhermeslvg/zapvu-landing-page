@@ -50,10 +50,6 @@
       paths.set(el, path);
     });
 
-    const hub = document.createElementNS(NS, 'circle');
-    hub.setAttribute('class', 'hub');
-    hub.setAttribute('cx', c.x); hub.setAttribute('cy', c.y); hub.setAttribute('r', r0);
-    svg.insertBefore(hub, svg.firstChild);
     svg.appendChild(dot);
   }
 
@@ -102,7 +98,6 @@
       if (!paths.get(from) || !paths.get(to)) { await wait(500); continue; }
       ping(from);
       await travel(paths.get(from), true, 750);   // do ícone até o símbolo
-      box.classList.remove('hub-ping'); void box.offsetWidth; box.classList.add('hub-ping');
       await wait(180);
       await travel(paths.get(to), false, 750);    // do símbolo até o aviso
       ping(to);

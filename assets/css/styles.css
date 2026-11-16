@@ -972,6 +972,110 @@ main { position: relative; }
 .node.ping, .chip.ping { border-color: var(--lime); box-shadow: 0 0 0 4px rgb(213 255 38 / 0.18), 0 0 24px rgb(213 255 38 / 0.35); }
 :root[data-theme="light"] .node.ping, :root[data-theme="light"] .chip.ping { border-color: #8DB300; box-shadow: 0 0 0 4px rgb(213 255 38 / 0.5), 0 10px 24px rgb(30 33 4 / 0.12); }
 .node, .chip { pointer-events: auto; }
+/* =========================================================
+   Ícones e avisos de vidro grosso (referência: bloco de vidro com
+   borda que pega luz e filetes de luz em cima e embaixo)
+   ========================================================= */
+:root[data-theme="dark"] {
+  --gl-bg: linear-gradient(155deg, rgb(255 255 255 / 0.16) 0%, rgb(255 255 255 / 0.04) 42%, rgb(213 255 38 / 0.07) 100%);
+  --gl-edge: rgb(255 255 255 / 0.20);
+  --gl-rim: conic-gradient(from 210deg, rgb(255 255 255 / 0.85), rgb(213 255 38 / 0.75) 12%, transparent 26%, rgb(160 220 255 / 0.35) 50%, transparent 64%, rgb(213 255 38 / 0.6) 82%, rgb(255 255 255 / 0.85));
+  --gl-inner: inset 0 1px 0 rgb(255 255 255 / 0.5), inset 0 -1px 0 rgb(255 255 255 / 0.12), inset 0 -14px 22px rgb(213 255 38 / 0.10), inset 0 10px 18px rgb(255 255 255 / 0.05);
+  --gl-drop: 0 14px 30px rgb(0 0 0 / 0.40), 0 2px 6px rgb(0 0 0 / 0.30);
+  --gl-strip: var(--lime);
+  --gl-icon: var(--lime);
+  --gl-icon-glow: drop-shadow(0 0 6px rgb(213 255 38 / 0.6));
+}
+:root[data-theme="light"] {
+  --gl-bg: linear-gradient(155deg, rgb(255 255 255 / 0.95) 0%, rgb(255 255 255 / 0.55) 45%, rgb(213 255 38 / 0.18) 100%);
+  --gl-edge: rgb(255 255 255 / 0.95);
+  --gl-rim: conic-gradient(from 210deg, #fff, rgb(190 235 20 / 0.9) 12%, transparent 26%, rgb(120 190 230 / 0.35) 50%, transparent 64%, rgb(190 235 20 / 0.8) 82%, #fff);
+  --gl-inner: inset 0 1px 0 #fff, inset 0 -1px 0 rgb(30 33 4 / 0.06), inset 0 -14px 22px rgb(213 255 38 / 0.22), inset 0 10px 18px rgb(255 255 255 / 0.6);
+  --gl-drop: 0 14px 30px rgb(30 33 4 / 0.12), 0 2px 6px rgb(30 33 4 / 0.08);
+  --gl-strip: #A8D000;
+  --gl-icon: var(--olive);
+  --gl-icon-glow: none;
+}
+
+.node, .chip {
+  isolation: isolate;
+  background: var(--gl-bg);
+  border: 1px solid var(--gl-edge);
+  box-shadow: var(--gl-inner), var(--gl-drop);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+}
+/* borda iridescente (só a moldura, via máscara) */
+.node::before, .chip::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: var(--gl-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+/* filetes de luz em cima e embaixo, como no bloco de vidro */
+.node::after, .chip::after {
+  content: "";
+  position: absolute;
+  left: 28%;
+  right: 28%;
+  top: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, var(--gl-strip), transparent) top / 100% 2px no-repeat,
+    linear-gradient(90deg, transparent, var(--gl-strip), transparent) bottom / 100% 2px no-repeat;
+  opacity: 0.85;
+  filter: blur(0.4px);
+}
+
+/* ícones: quadrado de vidro de cantos bem redondos */
+.node {
+  width: 58px;
+  height: 58px;
+  border-radius: 20px;
+  color: var(--gl-icon);
+  transition: scale 0.25s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.node svg { width: 24px; height: 24px; stroke-width: 1.9; filter: var(--gl-icon-glow); }
+.node:hover { scale: 1.08; }
+
+/* avisos: painel de vidro */
+.chip { border-radius: 18px; padding: 10px 18px 10px 10px; gap: 12px; }
+.chip strong { font-size: 13.5px; }
+.chip-ico {
+  position: relative;
+  width: 36px; height: 36px;
+  border-radius: 11px;
+  /* gema lima: brilho em cima, sombra embaixo */
+  background:
+    radial-gradient(70% 50% at 50% 12%, rgb(255 255 255 / 0.7), transparent 70%),
+    linear-gradient(180deg, #E4FF6A, #C6F00F 55%, #9CC400);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8), inset 0 -2px 4px rgb(78 97 0 / 0.45), 0 4px 12px rgb(213 255 38 / 0.35);
+  color: var(--olive);
+}
+:root[data-theme="light"] .chip-ico { background: radial-gradient(70% 50% at 50% 12%, rgb(255 255 255 / 0.7), transparent 70%), linear-gradient(180deg, #E4FF6A, #C6F00F 55%, #9CC400); }
+.chip-ico svg { stroke-width: 2.3; }
+
+/* quando o pulso chega: a luz do vidro acende */
+.node.ping, .chip.ping {
+  border-color: rgb(213 255 38 / 0.9);
+  box-shadow: var(--gl-inner), 0 0 0 4px rgb(213 255 38 / 0.16), 0 0 28px rgb(213 255 38 / 0.45), var(--gl-drop);
+}
+.node.ping::after, .chip.ping::after { opacity: 1; left: 12%; right: 12%; transition: left 0.3s var(--ease), right 0.3s var(--ease); }
+
+@media (max-width: 560px) {
+  .node { width: 46px; height: 46px; border-radius: 16px; }
+  .node svg { width: 19px; height: 19px; }
+  .chip { border-radius: 14px; padding: 7px 12px 7px 7px; }
+  .chip-ico { width: 28px; height: 28px; border-radius: 8px; }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
   .js .hero-copy > *, .js .hero-visual { opacity: 1; translate: 0 0; }

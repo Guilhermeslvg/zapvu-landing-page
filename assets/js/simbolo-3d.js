@@ -82,14 +82,10 @@ async function init() {
     mx += (tx - mx) * 0.05; my += (ty - my) * 0.05;
     if (reduce) { group.rotation.set(-0.2, -0.55, 0.1); }
     else {
-      // a cada 3,4 s dá uma volta inteira (alternando o eixo) e para de frente, mostrando o logo certo
-      const step = 3.4, n = Math.floor(t / step), f = Math.min(1, (t % step) / 1.9);
-      const e = f < 0.5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;
-      const ny = Math.ceil(n / 2), nx = Math.floor(n / 2);
-      const turnY = (n % 2 === 0 ? e : 0), turnX = (n % 2 === 1 ? e : 0);
-      group.rotation.y = 2 * Math.PI * (ny + turnY) - 0.35 + mx * 0.5;
-      group.rotation.x = 2 * Math.PI * (nx + turnX) - 0.15 + my * 0.3;
-      group.rotation.z = Math.sin(t * 0.6) * 0.08;
+      // gira 360° devagar, só de lado (uma volta a cada ~22 s), com leve inclinação seguindo o mouse
+      group.rotation.y = t * 0.285 + mx * 0.35;
+      group.rotation.x = -0.08 + my * 0.2;
+      group.rotation.z = 0;
       group.position.y = Math.sin(t * 0.9) * 0.1;
     }
     renderer.render(scene, camera);
