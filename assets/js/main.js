@@ -102,3 +102,10 @@ document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('clic
   updatePrice();
 }));
 if (range) updatePrice();
+
+// trilho do "Como funciona": o pulso corre a largura (ou altura) exata
+const flow = document.querySelector('.flow');
+if (flow) {
+  const setFlow = () => { flow.style.setProperty('--flow-w', `${flow.clientWidth}px`); flow.style.setProperty('--flow-h', `${flow.clientHeight}px`); };
+  new ResizeObserver(setFlow).observe(flow); setFlow();
+}

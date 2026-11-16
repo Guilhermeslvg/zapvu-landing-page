@@ -61,6 +61,9 @@
   new ResizeObserver(build).observe(box);
   build();
 
+  // etiqueta de vidro com o nome do ícone
+  nodes.forEach((el) => { if (!el.dataset.tip) return; const t = document.createElement('span'); t.className = 'tip'; t.textContent = el.dataset.tip; el.appendChild(t); });
+
   // passar o mouse destaca a ligação
   [...nodes, ...chips].forEach((el) => {
     el.addEventListener('pointerenter', () => paths.get(el)?.classList.add('is-on'));
