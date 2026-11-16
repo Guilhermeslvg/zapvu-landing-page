@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark" class="v-aneis">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zapvu | Versão anéis</title>
+  <meta name="description" content="Conecte números de WhatsApp ao seu sistema com um QR code. Envie em fila, receba tudo por webhook assinado e nunca perca uma mensagem.">
+  <meta property="og:title" content="Zapvu | API de WhatsApp para o seu sistema">
+  <meta property="og:description" content="Leia o QR code, pegue o token e mande mensagem pelo seu sistema.">
+  <meta property="og:image" content="assets/img/og.png">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script>
+    try { var t = localStorage.getItem('zapvu-tema'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="nav" aria-label="Principal">
+      <a href="#" class="nav-logo" aria-label="Zapvu, início">
+        <img class="logo-dark" src="assets/brand/zapvu-logo-horizontal-negativo.png" alt="Zapvu" width="1389" height="425">
+        <img class="logo-light" src="assets/brand/zapvu-logo-horizontal.png" alt="" width="1389" height="425">
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#funcionalidades">Funcionalidades</a></li>
+        <li><a href="#como-funciona">Como funciona</a></li>
+        <li><a href="#documentacao">Documentação</a></li>
+        <li><a href="#planos">Planos</a></li>
+        <li><a href="#perguntas">Suporte</a></li>
+        <li class="menu-only"><a href="#entrar">Entrar</a></li>
+        <li class="menu-only"><a href="#criar-conta" class="btn btn-primary">Criar conta</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Mudar para fundo branco" data-theme-toggle>
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+        </button>
+        <a href="#entrar" class="nav-login">Entrar</a>
+        <a href="#criar-conta" class="btn btn-primary btn-sm">Criar conta</a>
+        <button class="nav-menu" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu" data-menu>
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <span class="blob b-hero-1" aria-hidden="true"></span><span class="blob b-hero-2 alt" aria-hidden="true"></span>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="hero-tag"><span class="dot" aria-hidden="true"></span>API de WhatsApp via QR code</p>
+          <h1>Seu sistema<br>conversando no<br><mark>WhatsApp</mark></h1>
+          <p class="hero-sub">Crie uma instância, leia o QR code e use o token para enviar e receber mensagens por API REST. Envio em fila, webhooks assinados e nenhuma mensagem perdida.</p>
+
+          <div class="hero-ctas">
+            <a href="#criar-conta" class="btn btn-primary">
+              Testar grátis
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#documentacao" class="btn btn-ghost">Ver documentação</a>
+          </div>
+
+          <ul class="hero-notes" aria-label="Condições">
+            <li data-placeholder="dias-teste">7 dias grátis</li>
+            <li data-placeholder="cartao">Sem cartão</li>
+            <li>Sem cobrança por mensagem</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <svg class="orbits" viewBox="0 0 520 520">
+            <circle cx="260" cy="260" r="250"/>
+            <circle cx="260" cy="260" r="185"/>
+          </svg>
+
+          <img class="symbol" src="assets/brand/zapvu-simbolo.png" alt="" width="313" height="440">
+          <canvas class="symbol-3d"></canvas>
+
+          <span class="node n1"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg></span>
+          <span class="node n2"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span>
+          <span class="node n3"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg></span>
+          <span class="node n4"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+          <span class="node n5"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+          <span class="node n6"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span>
+
+          <div class="chip c1">
+            <span class="chip-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2M20 14v6h-6"/></svg></span>
+            <span><strong>QR code lido</strong><small>instância conectada</small></span>
+          </div>
+          <div class="chip c2">
+            <span class="chip-ico"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span>
+            <span><strong>Mensagem entregue</strong><small>fila · status sent</small></span>
+          </div>
+          <div class="chip c3">
+            <span class="chip-ico"><svg viewBox="0 0 24 24"><path d="M4 12h4l3-8 3 16 3-8h3"/></svg></span>
+            <span><strong>Webhook assinado</strong><small>HMAC-SHA256</small></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NÚMEROS ============ -->
+    <section class="stats" aria-label="Números do Zapvu">
+      <div class="container stats-grid">
+        <div class="stat"><strong>~16 MB</strong><span>de memória por número conectado, medido em produção</span></div>
+        <div class="stat"><strong>1,5 a 4 s</strong><span>de pausa aleatória entre envios, com “digitando” simulado</span></div>
+        <div class="stat"><strong>12 tentativas</strong><span>de entrega do webhook ao longo de cerca de 1 hora</span></div>
+        <div class="stat"><strong>0 duplicadas</strong><span>a mesma chamada repetida não manda a mensagem duas vezes</span></div>
+      </div>
+    </section>
+
+    <!-- ============ COMO FUNCIONA ============ -->
+    <section class="section" id="como-funciona">
+      <span class="blob b-como" aria-hidden="true"></span>
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Como funciona</p>
+          <h2>Do QR code à primeira mensagem</h2>
+          <p class="section-sub">Três passos, do jeito que você já conhece do WhatsApp Web.</p>
+        </header>
+
+        <ol class="steps">
+          <li class="step card">
+            <span class="step-n">1</span>
+            <h3>Crie uma instância</h3>
+            <p>Cada instância é um número de WhatsApp. Crie pelo painel ou pela API e receba a chave de acesso dela.</p>
+            <div class="mock" aria-hidden="true">
+              <div class="mock-row"><span>Instância</span><code>loja-centro</code></div>
+              <div class="mock-row"><span>Chave</span><code>zv_8f3k••••••q2b7</code></div>
+              <div class="mock-row"><span>Status</span><em class="st st-wait">esperando QR</em></div>
+            </div>
+          </li>
+          <li class="step card">
+            <span class="step-n">2</span>
+            <h3>Leia o QR code</h3>
+            <p>No celular, abra Aparelhos conectados e leia o código. Prefere sem câmera? Use o código de pareamento de 8 caracteres.</p>
+            <div class="mock mock-pair" aria-hidden="true">
+              <img src="assets/img/qr.svg" alt="" width="64" height="64">
+              <div><small>ou digite no celular</small><code class="pair">K7Q2-M9XA</code></div>
+            </div>
+          </li>
+          <li class="step card">
+            <span class="step-n">3</span>
+            <h3>Mande e receba</h3>
+            <p>Seu sistema envia pela API. Tudo o que chega, de mensagem a confirmação de leitura, vai para o seu webhook.</p>
+            <div class="mock" aria-hidden="true">
+              <div class="mock-row"><code>POST /v1/messages/text</code><em class="st st-ok">202</em></div>
+              <div class="mock-row"><code>message.delivered</code><em class="st st-ok">webhook</em></div>
+              <div class="mock-row"><code>message.read</code><em class="st st-ok">webhook</em></div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ RECURSOS ============ -->
+    <section class="section" id="funcionalidades">
+      <span class="blob b-func-1 alt" aria-hidden="true"></span><span class="blob b-func-2" aria-hidden="true"></span>
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Funcionalidades</p>
+          <h2>Feita para rodar no seu sistema, todo dia</h2>
+          <p class="section-sub">Não é só mandar mensagem. É mandar sem perder, sem duplicar e sem parecer robô.</p>
+        </header>
+
+        <div class="bento">
+          <!-- Fila -->
+          <article class="card b-queue">
+            <h3>Envio em fila que não se perde</h3>
+            <p>Cada envio entra numa fila gravada no banco. Se o servidor reiniciar, nada some. Dá para consultar o status ou cancelar antes de sair.</p>
+            <ul class="queue" aria-hidden="true">
+              <li><code>msg_7Hq2</code><span>Oi, Carla! Seu pedido saiu…</span><em class="st st-ok">entregue</em></li>
+              <li><code>msg_7Hq3</code><span>Boleto de novembro em anexo</span><em class="st st-ok">enviada</em></li>
+              <li><code>msg_7Hq4</code><span>Lembrete: consulta amanhã às 9h</span><em class="st st-wait">na fila · 2,8 s</em></li>
+              <li><code>msg_7Hq5</code><span>Promoção da semana</span><em class="st st-off">cancelada</em></li>
+            </ul>
+          </article>
+
+          <!-- Webhook assinado -->
+          <article class="card b-hook">
+            <h3>Webhooks assinados</h3>
+            <p>Cada aviso vai com assinatura HMAC-SHA256, para você ter certeza de que veio da Zapvu. Se o seu sistema cair, a gente tenta de novo por cerca de 1 hora.</p>
+<pre class="code-mini" aria-hidden="true"><code><span class="c-k">X-Zapvu-Signature</span>: sha256=9f2c…e81a
+{
+  <span class="c-k">"event"</span>: <span class="c-s">"message.received"</span>,
+  <span class="c-k">"instance"</span>: <span class="c-s">"loja-centro"</span>,
+  <span class="c-k">"text"</span>: <span class="c-s">"Oi, meu pedido já saiu?"</span>
+}</code></pre>
+          </article>
+
+          <!-- Ritmo humano -->
+          <article class="card b-human">
+            <h3>Ritmo de gente</h3>
+            <p>Pausa aleatória entre mensagens e “digitando” antes de cada envio. Reduz o risco de bloqueio.</p>
+            <div class="typing" aria-hidden="true"><span></span><span></span><span></span><small>digitando…</small></div>
+          </article>
+
+          <!-- Nada se perde -->
+          <article class="card b-safe">
+            <h3>Nenhuma mensagem recebida se perde</h3>
+            <p>A Zapvu só confirma o recebimento ao WhatsApp depois de gravar no banco. Se algo falhar antes, o WhatsApp entrega de novo.</p>
+          </article>
+
+          <!-- Configurações -->
+          <article class="card b-config">
+            <h3>Cada número do seu jeito</h3>
+            <ul class="toggles" aria-hidden="true">
+              <li><span>Rejeitar chamadas</span><i class="tg on"></i></li>
+              <li><span>Ignorar grupos</span><i class="tg"></i></li>
+              <li><span>Marcar como lido</span><i class="tg on"></i></li>
+              <li><span>Simular “digitando”</span><i class="tg on"></i></li>
+              <li><span>Incluir status</span><i class="tg"></i></li>
+            </ul>
+          </article>
+
+          <!-- Tipos -->
+          <article class="card b-types">
+            <h3>Tudo que o WhatsApp manda</h3>
+            <p>Texto com resposta e menções, imagem, vídeo, áudio, áudio de voz, documento, localização e reações.</p>
+            <div class="tags" aria-hidden="true">
+              <span>texto</span><span>imagem</span><span>vídeo</span><span>áudio</span><span>voz</span><span>documento</span><span>localização</span><span>reação</span>
+            </div>
+          </article>
+
+          <!-- Detalhes -->
+          <article class="card b-small">
+            <h3>Corrige o 9º dígito</h3>
+            <p>Número brasileiro com ou sem o 9? A Zapvu acerta sozinha.</p>
+          </article>
+          <article class="card b-small">
+            <h3>Avisa quando cai</h3>
+            <p>Detecta número desconectado, banido ou aberto em outro lugar e avisa por webhook, em vez de insistir sem parar.</p>
+          </article>
+          <article class="card b-small">
+            <h3>Reconecta sozinha</h3>
+            <p>Caiu a conexão? Ela tenta de novo com espera crescente, sem você fazer nada.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOCUMENTAÇÃO / CÓDIGO ============ -->
+    <section class="section section-code" id="documentacao">
+      <span class="blob b-doc" aria-hidden="true"></span>
+      <div class="container code-grid">
+        <div class="code-copy">
+          <p class="kicker">Documentação</p>
+          <h2>Uma chamada, uma mensagem</h2>
+          <p class="section-sub">Troque a chave e o número pelos seus e rode. Funciona com qualquer linguagem que faça uma requisição HTTP.</p>
+          <ul class="checks">
+            <li>Chaves <code>zv_</code> por número ou com acesso a todos</li>
+            <li>Chave de idempotência para não duplicar envios</li>
+            <li>Número com ou sem o 9º dígito</li>
+          </ul>
+          <a href="#documentacao" class="btn btn-ghost">Ler a documentação completa</a>
+        </div>
+
+        <div class="code-box">
+          <div class="code-tabs" role="tablist" aria-label="Linguagem do exemplo">
+            <button role="tab" aria-selected="true" aria-controls="tab-curl" id="t-curl">cURL</button>
+            <button role="tab" aria-selected="false" aria-controls="tab-node" id="t-node" tabindex="-1">Node.js</button>
+            <button role="tab" aria-selected="false" aria-controls="tab-py" id="t-py" tabindex="-1">Python</button>
+            <button role="tab" aria-selected="false" aria-controls="tab-php" id="t-php" tabindex="-1">PHP</button>
+            <button class="copy" type="button" data-copy>Copiar</button>
+          </div>
+<pre role="tabpanel" id="tab-curl" aria-labelledby="t-curl"><code>curl -X POST https://api.zapvu.com.br/v1/messages/text \
+  -H <span class="c-s">"Authorization: Bearer zv_SUA_CHAVE"</span> \
+  -H <span class="c-s">"Idempotency-Key: pedido-4821"</span> \
+  -H <span class="c-s">"Content-Type: application/json"</span> \
+  -d <span class="c-s">'{"instance": "loja-centro",
+       "to": "5531990000000",
+       "text": "Oi, Carla! Seu pedido saiu para entrega."}'</span></code></pre>
+<pre role="tabpanel" id="tab-node" aria-labelledby="t-node" hidden><code><span class="c-k">const</span> res = <span class="c-k">await</span> fetch(<span class="c-s">"https://api.zapvu.com.br/v1/messages/text"</span>, {
+  method: <span class="c-s">"POST"</span>,
+  headers: {
+    Authorization: <span class="c-s">`Bearer ${process.env.ZAPVU_KEY}`</span>,
+    <span class="c-s">"Idempotency-Key"</span>: <span class="c-s">"pedido-4821"</span>,
+    <span class="c-s">"Content-Type"</span>: <span class="c-s">"application/json"</span>,
+  },
+  body: JSON.stringify({
+    instance: <span class="c-s">"loja-centro"</span>,
+    to: <span class="c-s">"5531990000000"</span>,
+    text: <span class="c-s">"Oi, Carla! Seu pedido saiu para entrega."</span>,
+  }),
+});
+console.log(<span class="c-k">await</span> res.json());</code></pre>
+<pre role="tabpanel" id="tab-py" aria-labelledby="t-py" hidden><code><span class="c-k">import</span> os, requests
+
+res = requests.post(
+    <span class="c-s">"https://api.zapvu.com.br/v1/messages/text"</span>,
+    headers={
+        <span class="c-s">"Authorization"</span>: <span class="c-s">f"Bearer {os.environ['ZAPVU_KEY']}"</span>,
+        <span class="c-s">"Idempotency-Key"</span>: <span class="c-s">"pedido-4821"</span>,
+    },
+    json={
+        <span class="c-s">"instance"</span>: <span class="c-s">"loja-centro"</span>,
+        <span class="c-s">"to"</span>: <span class="c-s">"5531990000000"</span>,
+        <span class="c-s">"text"</span>: <span class="c-s">"Oi, Carla! Seu pedido saiu para entrega."</span>,
+    },
+)
+print(res.json())</code></pre>
+<pre role="tabpanel" id="tab-php" aria-labelledby="t-php" hidden><code>$ch = curl_init(<span class="c-s">'https://api.zapvu.com.br/v1/messages/text'</span>);
+curl_setopt_array($ch, [
+  CURLOPT_POST =&gt; <span class="c-k">true</span>,
+  CURLOPT_RETURNTRANSFER =&gt; <span class="c-k">true</span>,
+  CURLOPT_HTTPHEADER =&gt; [
+    <span class="c-s">'Authorization: Bearer '</span> . getenv(<span class="c-s">'ZAPVU_KEY'</span>),
+    <span class="c-s">'Idempotency-Key: pedido-4821'</span>,
+    <span class="c-s">'Content-Type: application/json'</span>,
+  ],
+  CURLOPT_POSTFIELDS =&gt; json_encode([
+    <span class="c-s">'instance'</span> =&gt; <span class="c-s">'loja-centro'</span>,
+    <span class="c-s">'to'</span> =&gt; <span class="c-s">'5531990000000'</span>,
+    <span class="c-s">'text'</span> =&gt; <span class="c-s">'Oi, Carla! Seu pedido saiu para entrega.'</span>,
+  ]),
+]);
+echo curl_exec($ch);</code></pre>
+          <div class="code-res">
+            <span class="res-status">202 Accepted</span>
+<pre><code>{ <span class="c-k">"id"</span>: <span class="c-s">"msg_7Hq2Lw9xT4"</span>, <span class="c-k">"status"</span>: <span class="c-s">"queued"</span> }</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEGURANÇA ============ -->
+    <section class="section" id="seguranca">
+      <span class="blob b-seg alt" aria-hidden="true"></span>
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Segurança e operação</p>
+          <h2>Leve no servidor, rígida no acesso</h2>
+        </header>
+        <div class="sec-grid">
+          <div class="sec-item"><h3>Chaves com escopo</h3><p>Uma chave pode gerenciar todos os números ou só um. A de um número não enxerga os outros. O banco guarda só o hash.</p></div>
+          <div class="sec-item"><h3>Painel com papéis</h3><p>Admin, operador e visualizador. Senha com argon2id e sessão protegida contra CSRF.</p></div>
+          <div class="sec-item"><h3>Proteção contra abuso</h3><p>Limite de requisições e de tentativas de login, e bloqueio de webhooks que apontem para endereços internos.</p></div>
+          <div class="sec-item"><h3>Auditoria de 90 dias</h3><p>Quem fez o quê, e quando, fica registrado.</p></div>
+          <div class="sec-item"><h3>HTTPS sempre</h3><p>Certificados emitidos e renovados sozinhos. Só as portas 80 e 443 ficam abertas.</p></div>
+          <div class="sec-item"><h3>Backup diário</h3><p>O banco é copiado todo dia, com 7 dias de retenção.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PLANOS ============ -->
+    <section class="section" id="planos">
+      <span class="blob b-plan" aria-hidden="true"></span>
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Planos</p>
+          <h2>Preço por número, mensagens à vontade</h2>
+          <p class="section-sub">Você paga pelos números conectados. Não existe cobrança por mensagem.</p>
+        </header>
+
+        <div class="price card" data-placeholder="precos">
+          <div class="price-calc">
+            <label for="qtd">Quantos números você vai conectar?</label>
+            <div class="stepper">
+              <button type="button" data-step="-1" aria-label="Menos um número">−</button>
+              <output id="qtd-out" aria-live="polite">3</output>
+              <button type="button" data-step="1" aria-label="Mais um número">+</button>
+            </div>
+            <input type="range" id="qtd" min="1" max="50" value="3">
+            <p class="price-total"><span id="total">R$ 117</span> por mês</p>
+            <p class="price-unit" id="unit">R$ 39 por número</p>
+            <a href="#criar-conta" class="btn btn-primary">Testar grátis</a>
+          </div>
+          <ul class="price-list">
+            <li>Todos os recursos da API em qualquer plano</li>
+            <li>Envios e recebimentos sem limite de cobrança</li>
+            <li>Webhooks assinados com reenvio</li>
+            <li>Painel para gerenciar números, chaves e usuários</li>
+            <li>Desconto progressivo a partir de 5 números</li>
+            <li>Teste grátis com 1 número</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PERGUNTAS ============ -->
+    <section class="section" id="perguntas">
+      <span class="blob b-faq alt" aria-hidden="true"></span>
+      <div class="container faq-grid">
+        <header class="section-head">
+          <p class="kicker">Suporte</p>
+          <h2>Perguntas comuns</h2>
+          <p class="section-sub">Não achou o que procura? Fala com a gente pelo <a href="#suporte" class="link" data-placeholder="contato">WhatsApp do suporte</a>.</p>
+        </header>
+        <div class="faq">
+          <details name="faq" open>
+            <summary>A Zapvu é a API oficial do WhatsApp?</summary>
+            <p>Não. Ela funciona como um WhatsApp Web automatizado: seu número se conecta como um aparelho, sem aprovação da Meta e sem modelo de mensagem aprovado. Por isso é mais barata e flexível. A Zapvu não tem ligação com a Meta nem com o WhatsApp.</p>
+          </details>
+          <details name="faq">
+            <summary>Meu número pode ser bloqueado?</summary>
+            <p>Pode. O WhatsApp bloqueia números que parecem spam. O ritmo humano da Zapvu (pausa entre envios e “digitando”) reduz esse risco, mas nenhuma API não oficial consegue eliminá-lo. Mande só para quem espera falar com você.</p>
+          </details>
+          <details name="faq">
+            <summary>Posso conectar vários números?</summary>
+            <p>Pode. Cada número é uma instância, e você gerencia todas com uma chave de acesso geral ou dá a cada sistema uma chave que só enxerga o próprio número.</p>
+          </details>
+          <details name="faq">
+            <summary>E se o meu sistema estiver fora do ar?</summary>
+            <p>A Zapvu tenta entregar o webhook de novo até 12 vezes ao longo de cerca de 1 hora. Os eventos ficam guardados e podem ser reenviados depois.</p>
+          </details>
+          <details name="faq">
+            <summary>Se eu repetir a mesma chamada, a mensagem sai duas vezes?</summary>
+            <p>Não. Mande uma chave de idempotência e a Zapvu reconhece a repetição. A mensagem sai uma vez só.</p>
+          </details>
+          <details name="faq">
+            <summary>Preciso de câmera para conectar?</summary>
+            <p>Não. Além do QR code, dá para conectar com um código de pareamento de 8 caracteres digitado no celular.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta">
+      <div class="container cta-box">
+        <img class="cta-symbol" src="assets/brand/zapvu-simbolo.png" alt="" width="313" height="440">
+        <h2>Conecte seu primeiro número hoje</h2>
+        <p>Crie a conta, leia o QR code e mande a primeira mensagem em poucos minutos.</p>
+        <a href="#criar-conta" class="btn btn-dark">Testar grátis
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img class="logo-dark" src="assets/brand/zapvu-logo-horizontal-negativo.png" alt="Zapvu" width="1389" height="425">
+        <img class="logo-light" src="assets/brand/zapvu-logo-horizontal.png" alt="" width="1389" height="425">
+        <p>API de WhatsApp leve e segura para conectar números ao seu sistema.</p>
+      </div>
+      <nav aria-label="Produto"><h4>Produto</h4><a href="#funcionalidades">Funcionalidades</a><a href="#como-funciona">Como funciona</a><a href="#planos">Planos</a></nav>
+      <nav aria-label="Desenvolvedores"><h4>Desenvolvedores</h4><a href="#documentacao">Documentação</a><a href="#documentacao">Webhooks</a><a href="#seguranca">Segurança</a></nav>
+      <nav aria-label="Empresa"><h4>Empresa</h4><a href="#perguntas">Suporte</a><a href="#termos">Termos de uso</a><a href="#privacidade">Privacidade</a></nav>
+    </div>
+    <div class="container footer-legal">
+      <p>© 2026 Zapvu. Todos os direitos reservados.</p>
+      <p>A Zapvu não é afiliada, associada nem endossada pela Meta ou pelo WhatsApp. WhatsApp é marca registrada da Meta Platforms, Inc.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+
+  <script src="assets/js/simbolo-3d.js" defer></script>
+</body>
+</html>

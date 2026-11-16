@@ -207,7 +207,6 @@ code { font-family: var(--mono); }
   display: flex;
   align-items: center;
   padding: 140px 24px 96px;
-  overflow: hidden;
 }
 .gosma {
   position: absolute;
@@ -748,6 +747,104 @@ code { font-family: var(--mono); }
   .cta-symbol { width: 220px; right: -50px; bottom: -40px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* =========================================================
+   Manchas suaves pela página (no lugar da gosma do topo)
+   Cada mancha fica no canto da sua seção e nunca atrás do logo.
+   ========================================================= */
+:root[data-theme="dark"] { --blob-a: rgb(213 255 38 / 0.55); --blob-b: rgb(120 150 10 / 0.35); --blob-o: 0.55; }
+:root[data-theme="light"] { --blob-a: rgb(213 255 38 / 0.85); --blob-b: rgb(213 255 38 / 0.35); --blob-o: 0.75; }
+
+main { position: relative; }
+.section, .stats, .cta, .footer { position: relative; }
+.hero-inner, .section > .container, .stats > .container, .cta > .container, .footer > .container { position: relative; z-index: 1; }
+
+.blob {
+  position: absolute;
+  z-index: 0;
+  width: var(--s, 560px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, var(--blob-a) 0%, var(--blob-b) 34%, transparent 68%);
+  opacity: var(--blob-o);
+  animation: deriva 22s ease-in-out infinite alternate;
+}
+.blob.alt { --blob-a: rgb(30 33 4 / 0.0); background: radial-gradient(circle at 50% 50%, rgb(213 255 38 / 0.42) 0%, rgb(160 200 20 / 0.22) 36%, transparent 68%); animation-duration: 28s; animation-direction: alternate-reverse; }
+:root[data-theme="light"] .blob.alt { background: radial-gradient(circle at 50% 50%, rgb(213 255 38 / 0.7) 0%, rgb(213 255 38 / 0.25) 38%, transparent 68%); }
+@keyframes deriva {
+  0%   { translate: 0 0; scale: 1; }
+  50%  { translate: var(--dx, 40px) var(--dy, -30px); scale: 1.08; }
+  100% { translate: calc(var(--dx, 40px) * -0.6) calc(var(--dy, -30px) * -0.8); scale: 0.96; }
+}
+
+/* posições: sempre nas bordas, longe do logo 3D (que fica à direita do topo) */
+.b-hero-1 { --s: 620px; left: -260px; top: -180px; --dx: 60px; --dy: 40px; }
+.b-hero-2 { --s: 420px; left: 32%; bottom: -220px; --dx: -50px; --dy: -20px; }
+.b-como   { --s: 520px; right: -240px; top: 40px; --dx: -40px; --dy: 50px; }
+.b-func-1 { --s: 600px; left: -300px; top: 30%; --dx: 50px; --dy: -40px; }
+.b-func-2 { --s: 460px; right: -200px; bottom: -120px; --dx: -30px; --dy: -50px; }
+.b-doc    { --s: 640px; right: -120px; top: 10%; --dx: -60px; --dy: 30px; }
+.b-seg    { --s: 480px; left: -220px; bottom: -80px; --dx: 40px; --dy: -30px; }
+.b-plan   { --s: 560px; right: 8%; top: 32%; --dx: -50px; --dy: 40px; }
+.b-faq    { --s: 520px; left: -240px; top: 20%; --dx: 40px; --dy: 40px; }
+
+/* cards de vidro, para as manchas aparecerem por trás */
+.card, .faq details, .code-box {
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+}
+:root[data-theme="dark"] .card, :root[data-theme="dark"] .faq details { background: rgb(18 18 18 / 0.55); border-color: rgb(255 255 255 / 0.09); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06); }
+:root[data-theme="light"] .card, :root[data-theme="light"] .faq details { background: rgb(255 255 255 / 0.6); border-color: rgb(255 255 255 / 0.9); box-shadow: inset 0 1px 0 #fff, 0 10px 30px rgb(30 33 4 / 0.05); }
+:root[data-theme="dark"] .faq details[open] { background: rgb(28 28 28 / 0.7); }
+:root[data-theme="light"] .faq details[open] { background: rgb(255 255 255 / 0.8); }
+.b-safe { background: var(--lime) !important; }
+.stats { background: transparent; }
+
+@media (max-width: 560px) {
+  .blob { --s: 360px !important; }
+  .b-hero-1 { left: -180px; top: -120px; }
+  .b-hero-2, .b-plan { display: none; }
+}
+
+/* =========================================================
+   Versão "anéis": fundo verde profundo com anéis de luz lima
+   (ativada por <html class="v-aneis">, em versao-aneis.html)
+   ========================================================= */
+.v-aneis[data-theme="dark"] {
+  --bg: #08130A;
+  --bg-2: #0E1C0C;
+  --line: rgb(213 255 38 / 0.10);
+  --line-2: rgb(213 255 38 / 0.18);
+  --text-2: #A9B79A;
+  --glass-fill: rgb(10 24 10 / 0.45);
+}
+.v-aneis[data-theme="light"] {
+  --bg: #F6FBE9;
+  --bg-2: #EEF6D8;
+  --line: rgb(30 33 4 / 0.10);
+}
+.v-aneis body {
+  background:
+    radial-gradient(60% 40% at 80% 0%, var(--fundo-1) 0%, transparent 70%),
+    radial-gradient(50% 35% at 10% 40%, var(--fundo-2) 0%, transparent 70%),
+    radial-gradient(60% 40% at 90% 75%, var(--fundo-1) 0%, transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--fundo-3) 50%, var(--bg) 100%);
+}
+.v-aneis[data-theme="dark"] { --fundo-1: #13361A; --fundo-2: #1E3A0C; --fundo-3: #0B1A0C; }
+.v-aneis[data-theme="light"] { --fundo-1: #E4F5B8; --fundo-2: #EDF8CB; --fundo-3: #F2F9DE; }
+
+/* as manchas viram anéis de luz desfocados */
+.v-aneis .blob {
+  background: radial-gradient(circle at 50% 50%, transparent 40%, var(--anel) 52%, var(--anel-2) 58%, transparent 70%);
+  opacity: 1;
+  filter: blur(6px);
+}
+.v-aneis .blob.alt { background: radial-gradient(circle at 50% 50%, var(--glow-verde) 0%, transparent 65%); filter: none; }
+.v-aneis[data-theme="dark"] { --anel: rgb(213 255 38 / 0.55); --anel-2: rgb(213 255 38 / 0.25); --glow-verde: rgb(40 110 50 / 0.45); }
+.v-aneis[data-theme="light"] { --anel: rgb(190 235 20 / 0.8); --anel-2: rgb(213 255 38 / 0.4); --glow-verde: rgb(213 255 38 / 0.35); }
+:root.v-aneis[data-theme="dark"] .card, :root.v-aneis[data-theme="dark"] .faq details { background: rgb(10 26 12 / 0.5); border-color: rgb(213 255 38 / 0.10); }
+.v-aneis .stats { border-color: var(--line); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
