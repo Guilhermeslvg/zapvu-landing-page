@@ -1,0 +1,107 @@
+/* Blocos de fluxo no estilo editor de automação (JS em assets/js/fluxo.js).
+   Bloco quadrado com ícone, nome embaixo; linhas curvas com seta; pulso lima com rastro.
+   O bloco acende (borda lima e brilho) quando a execução chega nele. */
+.wf { --wf-tile: 62px; --wf-lime: #D5FF26; --wf-edge: rgb(255 255 255 / 0.16); --wf-bg: #15170F; --wf-line: rgb(255 255 255 / 0.20); }
+:root[data-theme="light"] .wf { --wf-lime: #7A9A00; --wf-edge: rgb(30 33 4 / 0.16); --wf-bg: #FFFFFF; --wf-line: rgb(30 33 4 / 0.22); }
+
+.wf-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; color: var(--wf-line); }
+.wf-line { fill: none; stroke: var(--wf-line); stroke-width: 1.6; stroke-linecap: round; transition: stroke 0.3s; }
+.wf-line.is-on { stroke: color-mix(in srgb, var(--wf-lime) 70%, transparent); }
+.wf-port { fill: var(--wf-bg); stroke: var(--wf-line); stroke-width: 1.4; }
+.wf-tail { fill: none; stroke: var(--wf-lime); stroke-width: 3; stroke-linecap: round; opacity: 0; filter: drop-shadow(0 0 4px var(--wf-lime)); transition: opacity 0.2s; }
+.wf-dot { fill: #F7FFD0; opacity: 0; filter: drop-shadow(0 0 6px var(--wf-lime)) drop-shadow(0 0 2px var(--wf-lime)); transition: opacity 0.2s; }
+.wf-tail.is-on { opacity: 0.95; }
+.wf-dot.is-on { opacity: 1; }
+/* evento voltando: rastro claro */
+.wf.wf-back .wf-tail { stroke: #FFFFFF; filter: drop-shadow(0 0 4px rgb(255 255 255 / 0.8)); }
+:root[data-theme="light"] .wf.wf-back .wf-tail { stroke: #1E2104; filter: none; }
+
+.wf-node {
+  position: absolute; left: var(--x); top: var(--y); translate: -50% -32px;
+  display: grid; justify-items: center; gap: 2px; width: 120px; text-align: center;
+  z-index: 1; cursor: pointer;
+}
+.wf-tile {
+  display: grid; place-items: center;
+  width: var(--wf-tile); height: var(--wf-tile); margin-bottom: 6px;
+  border-radius: 18px; border: 1.5px solid var(--wf-edge); background: var(--wf-bg);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.35);
+  transition: border-color 0.3s, box-shadow 0.3s, scale 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+:root[data-theme="light"] .wf-tile { box-shadow: 0 10px 24px rgb(30 33 4 / 0.10); }
+.wf-tile svg { width: 26px; height: 26px; fill: none; stroke: var(--text); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
+.wf-tile img { width: 44%; height: auto; }
+.wf-name { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); white-space: nowrap; }
+.wf-sub { font: 10.5px var(--mono); color: var(--text-2); white-space: nowrap; }
+
+/* núcleo Zapvu: sempre com a borda lima */
+.wf-core .wf-tile { --wf-tile: 78px; border-color: color-mix(in srgb, var(--wf-lime) 55%, transparent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--wf-lime) 8%, transparent), 0 14px 30px rgb(0 0 0 / 0.35); }
+.wf-core { translate: -50% -40px; }
+
+/* bloco em execução */
+.wf-node.is-run .wf-tile, .wf-node:hover .wf-tile {
+  border-color: var(--wf-lime);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--wf-lime) 18%, transparent), 0 0 28px color-mix(in srgb, var(--wf-lime) 45%, transparent);
+  scale: 1.06;
+}
+.wf-node.is-run .wf-tile svg, .wf-node:hover .wf-tile svg { stroke: var(--wf-lime); }
+
+/* selo que aparece em cima do bloco */
+.wf-badge {
+  position: absolute; left: 50%; top: -26px; translate: -50% 6px;
+  padding: 3px 9px; border-radius: 99px; background: var(--wf-lime); color: #1E2104;
+  font: 600 10.5px var(--mono); white-space: nowrap;
+  opacity: 0; transition: opacity 0.25s, translate 0.25s;
+  pointer-events: none;
+}
+:root[data-theme="light"] .wf-badge { color: #FFFFFF; }
+.wf-badge.is-on { opacity: 1; translate: -50% 0; }
+
+/* registro da chamada atual */
+.wf-log {
+  position: absolute; left: 55%; top: 84%; translate: -50% 0;
+  padding: 5px 11px; border-radius: 99px; border: 1px solid var(--wf-edge); background: var(--wf-bg);
+  font: 11px var(--mono); color: var(--text-2); white-space: nowrap; z-index: 1;
+  transition: opacity 0.25s;
+}
+.wf-log b { color: var(--wf-lime); font-weight: 600; }
+
+/* O que é: a área fica mais alta para caber os nomes */
+#o-que-e .oq-viz.wf { aspect-ratio: 560 / 470; }
+/* Arquitetura: altura para nomes e a volta dos webhooks */
+.pf2 .pf-viz.wf { aspect-ratio: 640 / 360; }
+.pf2 .wf .pf-chip { z-index: 1; }
+/* destaque dos indicadores aplicado aos blocos */
+.pf2[data-active="0"] .hl-core .wf-tile,
+.pf2[data-active="2"] .hl-db .wf-tile,
+.pf2[data-active="3"] .hl-app .wf-tile { border-color: var(--wf-lime); box-shadow: 0 0 0 5px color-mix(in srgb, var(--wf-lime) 16%, transparent); }
+.pf2 .wf-node.hl-core, .pf2 .wf-node.hl-db, .pf2 .wf-node.hl-app { border: 0; box-shadow: none; background: none; }
+
+@media (max-width: 700px) {
+  .wf { --wf-tile: 44px; }
+  .wf-tile { border-radius: 13px; margin-bottom: 4px; }
+  .wf-tile svg { width: 19px; height: 19px; }
+  .wf-core .wf-tile { --wf-tile: 56px; }
+  .wf-node { width: 86px; translate: -50% -24px; }
+  .wf-core { translate: -50% -30px; }
+  .wf-name { font-size: 10.5px; }
+  .wf-sub { display: none; }
+  .wf-log { font-size: 9.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wf-tile, .wf-badge { transition: none; }
+}
+
+/* ícones dentro dos blocos não herdam o posicionamento do svg das linhas */
+.wf .wf-tile svg { position: static; inset: auto; }
+/* O que é: coluna de sistemas mais compacta para respirar */
+#o-que-e .oq-viz.wf { aspect-ratio: 560 / 520; }
+#o-que-e .wf-node:not(.wf-core):not([data-wf="wa"]) { --wf-tile: 50px; translate: -50% -25px; }
+#o-que-e .wf-node:not(.wf-core):not([data-wf="wa"]) .wf-tile { border-radius: 15px; margin-bottom: 4px; }
+#o-que-e .wf-node:not(.wf-core):not([data-wf="wa"]) .wf-tile svg { width: 22px; height: 22px; }
+#o-que-e .wf-node:not(.wf-core):not([data-wf="wa"]) .wf-sub { display: none; }
+@media (max-width: 700px) {
+  #o-que-e .wf-node:not(.wf-core):not([data-wf="wa"]) { --wf-tile: 38px; translate: -50% -19px; }
+  #o-que-e .wf-node:not(.wf-core):not([data-wf="wa"]) .wf-tile svg { width: 17px; height: 17px; }
+  .pf2 .pf-viz.wf { aspect-ratio: 640 / 420; }
+}

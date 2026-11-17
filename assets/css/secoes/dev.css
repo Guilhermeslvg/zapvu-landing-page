@@ -522,3 +522,11 @@
 }
 
 .ps-docs { justify-self: center; }
+
+/* planos: mesma altura e o anel animado do topo atrás */
+.pz-grid { align-items: stretch; z-index: 1; }
+.pz-card ul { flex: 1; }
+.pz .blob { z-index: 0; }
+.b-planos { --s: 640px; left: calc(50% - 320px); top: calc(50% - 300px); --dx: 30px; --dy: -20px; }
+.b-planos-2 { --s: 520px; left: 10%; top: 70%; --dx: 40px; --dy: -30px; }
+@media (max-width: 760px) { .b-planos { --s: 420px; } .b-planos-2 { display: none; } }

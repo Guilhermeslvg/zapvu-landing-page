@@ -269,6 +269,7 @@ echo $data["id"] . " " . $data["status"];`,
     box.dataset.active = String(cur);
     btns.forEach((b, k) => { b.setAttribute('aria-selected', k === cur ? 'true' : 'false'); b.tabIndex = k === cur ? 0 : -1; });
     title.textContent = btns[cur].dataset.title;
+    if (window.zvPF && box.dataset.ready) window.zvPF(cur);
     const bar = btns[cur].querySelector('.pf2-prog'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
     if (focus) btns[cur].focus();
     sched();
@@ -287,6 +288,7 @@ echo $data["id"] . " " . $data["status"];`,
   box.addEventListener('pointerleave', () => { hover = false; sched(); });
   new IntersectionObserver(([e]) => { vis = e.isIntersecting; sched(); }, { threshold: 0.3 }).observe(box);
   set(0);
+  box.dataset.ready = '1';
 })();
 
 /* ---------- Segurança: um item aceso por vez; passar o mouse acende aquele ---------- */
