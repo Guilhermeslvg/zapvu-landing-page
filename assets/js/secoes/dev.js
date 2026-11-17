@@ -5,7 +5,7 @@
    Bearer + Idempotency-Key, resposta 202 com id e status).
    ATENÇÃO: confirme com o código do backend antes de publicar. Se mudar, troque só aqui. */
 const ZAPVU_API = {
-  base: 'https://api.zapvu.com.br/v1',
+  base: 'https://api.exemplo.dev/v1', // endereço de demonstração, não é a API real
   enviarTexto: { metodo: 'POST', rota: '/messages/text' },
 };
 
@@ -74,10 +74,11 @@ const ZAPVU_API = {
   /* código: quatro linguagens com a mesma requisição */
   const URL_ = ZAPVU_API.base + ZAPVU_API.enviarTexto.rota;
   const CODE = {
-    js: `const res = await fetch("${URL_}", {
+    js: `// Exemplo ilustrativo: endereço e chave de demonstração
+const res = await fetch("${URL_}", {
   method: "POST",
   headers: {
-    "Authorization": \`Bearer \${process.env.ZAPVU_API_KEY}\`,
+    "Authorization": \`Bearer \${process.env.SUA_CHAVE_DEMO}\`,
     "Content-Type": "application/json",
     "Idempotency-Key": "pedido-4821"
   },
@@ -90,13 +91,14 @@ const ZAPVU_API = {
 
 const data = await res.json();
 console.log(data.id, data.status);`,
-    py: `import os
+    py: `# Exemplo ilustrativo: endereço e chave de demonstração
+import os
 import requests
 
 res = requests.post(
     "${URL_}",
     headers={
-        "Authorization": f"Bearer {os.environ['ZAPVU_API_KEY']}",
+        "Authorization": f"Bearer {os.environ['SUA_CHAVE_DEMO']}",
         "Idempotency-Key": "pedido-4821",
     },
     json={
@@ -109,12 +111,13 @@ res = requests.post(
 data = res.json()
 print(data["id"], data["status"])`,
     php: `<?php
+// Exemplo ilustrativo: endereço e chave de demonstração
 $ch = curl_init("${URL_}");
 curl_setopt_array($ch, [
     CURLOPT_POST => true,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => [
-        "Authorization: Bearer " . getenv("ZAPVU_API_KEY"),
+        "Authorization: Bearer " . getenv("SUA_CHAVE_DEMO"),
         "Content-Type: application/json",
         "Idempotency-Key: pedido-4821",
     ],
@@ -127,8 +130,9 @@ curl_setopt_array($ch, [
 
 $data = json_decode(curl_exec($ch), true);
 echo $data["id"] . " " . $data["status"];`,
-    curl: `curl -X POST "${URL_}" \\
-  -H "Authorization: Bearer $ZAPVU_API_KEY" \\
+    curl: `# Exemplo ilustrativo: endereço e chave de demonstração
+curl -X POST "${URL_}" \\
+  -H "Authorization: Bearer $SUA_CHAVE_DEMO" \\
   -H "Content-Type: application/json" \\
   -H "Idempotency-Key: pedido-4821" \\
   -d '{
