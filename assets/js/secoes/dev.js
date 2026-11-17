@@ -32,6 +32,10 @@ const ZAPVU_API = {
     path.textContent = PATHS[i];
     root.style.setProperty('--ps-p', String(i / (steps.length - 1)));
     if (focus) steps[i].focus();
+    const cnt = root.querySelector('[data-ps-count]'); if (cnt) cnt.textContent = `Passo ${i + 1} de ${steps.length}`;
+    const nx = root.querySelector('[data-ps-next]');
+    if (nx) nx.firstChild.textContent = i === steps.length - 1 ? 'Ver de novo ' : 'Próximo passo ';
+    steps.forEach((b, k) => b.closest('li').classList.toggle('is-next', k === i + 1));
     play(i);
   }
 
@@ -66,6 +70,7 @@ const ZAPVU_API = {
   }
 
   steps.forEach((b, k) => b.addEventListener('click', () => go(k)));
+  root.querySelector('[data-ps-next]').addEventListener('click', () => go((cur + 1) % steps.length));
   root.querySelector('.ps-steps').addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); go((cur + 1) % steps.length, true); }
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); go((cur + steps.length - 1) % steps.length, true); }
