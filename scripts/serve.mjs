@@ -15,7 +15,7 @@ export function startServer(port = 0) {
       const file = normalize(join(ROOT, p));
       if (!file.startsWith(ROOT) || /[\/](node_modules|\.git|\.claude)[\/]/.test(file)) { res.writeHead(403).end('403'); return; }
       await stat(file);
-      res.writeHead(200, { 'Content-Type': TYPES[extname(file)] || 'application/octet-stream' });
+      res.writeHead(200, { 'Content-Type': TYPES[extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
       res.end(await readFile(file));
     } catch {
       res.writeHead(404).end('404');

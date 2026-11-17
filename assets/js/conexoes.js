@@ -1,115 +1,154 @@
 // Liga os ícones e os avisos ao símbolo do Zapvu, como uma rede.
 // Um pulso de luz sai de um tipo de mensagem, passa pelo símbolo e acende um aviso:
 // é o caminho que a mensagem faz na API (entra, é processada, vira evento).
+// As linhas acompanham os ícones enquanto eles flutuam, e passar o mouse num ícone
+// manda o pulso dele na hora.
 (() => {
   const box = document.querySelector('.hero-visual');
   if (!box) return;
   const nodes = [...box.querySelectorAll('.node')];
   const chips = [...box.querySelectorAll('.chip')];
+  const items = [...nodes, ...chips];
   const NS = 'http://www.w3.org/2000/svg';
+  const el = (tag, cls) => { const e = document.createElementNS(NS, tag); if (cls) e.setAttribute('class', cls); return e; };
 
-  const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('class', 'links');
+  const svg = el('svg', 'links');
   svg.setAttribute('aria-hidden', 'true');
   box.insertBefore(svg, box.querySelector('.node'));
 
-  const dot = document.createElementNS(NS, 'circle');
-  dot.setAttribute('class', 'pulse');
-  dot.setAttribute('r', '4');
+  // uma linha por peça; a cauda e o ponto do pulso ficam por cima de todas
+  const paths = new Map();
+  items.forEach((it) => {
+    const p = el('path', it.classList.contains('chip') ? 'link link-out' : 'link');
+    svg.appendChild(p);
+    paths.set(it, p);
+  });
+  const ripple = el('circle', 'ripple');
+  const tail = el('path', 'tail');
+  const dot = el('circle', 'pulse');
+  dot.setAttribute('r', '3.5');
+  svg.append(ripple, tail, dot);
 
-  let paths = new Map(); // elemento -> path
-
-  function centerOf(el) {
-    const b = box.getBoundingClientRect();
-    const r = el.getBoundingClientRect();
-    return { x: r.left - b.left + r.width / 2, y: r.top - b.top + r.height / 2 };
+  let W = 0, H = 0, r0 = 0;
+  function measure() {
+    W = box.clientWidth; H = box.clientHeight;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    r0 = Math.min(W, H) * 0.17; // a linha começa na borda do símbolo, não no meio dele
+    ripple.setAttribute('cx', W / 2); ripple.setAttribute('cy', H / 2); ripple.setAttribute('r', r0);
   }
+  new ResizeObserver(measure).observe(box);
+  measure();
 
-  function build() {
-    const w = box.clientWidth, h = box.clientHeight;
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.textContent = '';
-    paths = new Map();
-    const c = { x: w / 2, y: h / 2 };
-    const r0 = Math.min(w, h) * 0.16; // começa na borda do símbolo, não no meio dele
-
-    [...nodes, ...chips].forEach((el, i) => {
-      const p = centerOf(el);
-      const dx = p.x - c.x, dy = p.y - c.y;
+  // redesenha as curvas a partir da posição real de cada peça (que flutua)
+  function draw() {
+    const b = box.getBoundingClientRect();
+    const cx = W / 2, cy = H / 2;
+    items.forEach((it, i) => {
+      const r = it.getBoundingClientRect();
+      const px = r.left - b.left + r.width / 2, py = r.top - b.top + r.height / 2;
+      const dx = px - cx, dy = py - cy;
       const len = Math.hypot(dx, dy) || 1;
       const ux = dx / len, uy = dy / len;
-      const sx = c.x + ux * r0, sy = c.y + uy * r0;
-      // curva leve: ponto de controle deslocado na perpendicular, alternando o lado
-      const side = i % 2 ? 1 : -1;
-      const mx = (sx + p.x) / 2 - uy * len * 0.12 * side;
-      const my = (sy + p.y) / 2 + ux * len * 0.12 * side;
-      // a linha termina na borda da peça, não no meio dela (assim o pulso não aparece por dentro do vidro)
-      const er = el.getBoundingClientRect();
-      const hw = er.width / 2 + 2, hh = er.height / 2 + 2;
-      const tEdge = Math.min(Math.abs(ux) > 1e-3 ? hw / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-3 ? hh / Math.abs(uy) : Infinity);
-      const ex = p.x - ux * tEdge, ey = p.y - uy * tEdge;
-      const path = document.createElementNS(NS, 'path');
-      path.setAttribute('d', `M${sx.toFixed(1)} ${sy.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`);
-      path.setAttribute('class', el.classList.contains('chip') ? 'link link-out' : 'link');
-      svg.appendChild(path);
-      paths.set(el, path);
+      const sx = cx + ux * r0, sy = cy + uy * r0;
+      // termina na borda da peça (o pulso não aparece por dentro do vidro)
+      const hw = r.width / 2 + 3, hh = r.height / 2 + 3;
+      const te = Math.min(Math.abs(ux) > 1e-3 ? hw / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-3 ? hh / Math.abs(uy) : Infinity);
+      const ex = px - ux * te, ey = py - uy * te;
+      // curva leve, alternando o lado
+      const bend = (i % 2 ? 1 : -1) * (len - r0 - te) * 0.14;
+      const mx = (sx + ex) / 2 - uy * bend, my = (sy + ey) / 2 + ux * bend;
+      paths.get(it).setAttribute('d', `M${sx.toFixed(1)} ${sy.toFixed(1)} Q${mx.toFixed(1)} ${my.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`);
     });
-
-    svg.appendChild(dot);
   }
 
-  new ResizeObserver(build).observe(box);
-  build();
-
   // etiqueta de vidro com o nome do ícone
-  nodes.forEach((el) => { if (!el.dataset.tip) return; const t = document.createElement('span'); t.className = 'tip'; t.textContent = el.dataset.tip; el.appendChild(t); });
+  nodes.forEach((n) => { if (!n.dataset.tip) return; const t = document.createElement('span'); t.className = 'tip'; t.textContent = n.dataset.tip; n.appendChild(t); });
 
-  // passar o mouse destaca a ligação
-  [...nodes, ...chips].forEach((el) => {
-    el.addEventListener('pointerenter', () => paths.get(el)?.classList.add('is-on'));
-    el.addEventListener('pointerleave', () => paths.get(el)?.classList.remove('is-on'));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(box);
+
+  // linhas seguem as peças a cada quadro (só enquanto o hero está na tela)
+  (function follow() {
+    requestAnimationFrame(follow);
+    if (visible && !document.hidden) draw();
+  })();
+
+  // passar o mouse acende a ligação
+  items.forEach((it) => {
+    it.addEventListener('pointerenter', () => paths.get(it).classList.add('is-hover'));
+    it.addEventListener('pointerleave', () => paths.get(it).classList.remove('is-hover'));
   });
 
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (reduce) return;
 
-  const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
-  function travel(path, reverse, ms) {
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const TAIL = 46;
+  let token = 0; // muda quando um pulso novo interrompe o anterior
+
+  function travel(path, reverse, ms, my) {
     return new Promise((done) => {
-      const L = path.getTotalLength();
       path.classList.add('is-on');
-      dot.classList.add('is-on');
+      dot.classList.add('is-on'); tail.classList.add('is-on');
       const t0 = performance.now();
       (function step(now) {
+        if (my !== token) { path.classList.remove('is-on'); return done(false); }
+        const L = path.getTotalLength();
         const t = Math.min(1, (now - t0) / ms);
-        const k = ease(t);
-        const pt = path.getPointAtLength(reverse ? L * (1 - k) : L * k);
+        const pos = (reverse ? 1 - ease(t) : ease(t)) * L;
+        const pt = path.getPointAtLength(pos);
         dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+        // cauda: um trecho da própria curva atrás do ponto
+        tail.setAttribute('d', path.getAttribute('d'));
+        const a = reverse ? pos : Math.max(0, pos - TAIL);
+        const len = reverse ? Math.min(TAIL, L - pos) : pos - a;
+        tail.style.strokeDasharray = `0 ${a} ${len} ${L}`;
         if (t < 1) requestAnimationFrame(step);
-        else { path.classList.remove('is-on'); dot.classList.remove('is-on'); done(); }
+        else { path.classList.remove('is-on'); done(true); }
       })(t0);
     });
   }
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-  const ping = (el) => { el.classList.remove('ping'); void el.offsetWidth; el.classList.add('ping'); setTimeout(() => el.classList.remove('ping'), 1100); };
+  const ping = (it) => { it.classList.remove('ping'); void it.offsetWidth; it.classList.add('ping'); setTimeout(() => it.classList.remove('ping'), 1100); };
+  const hit = () => {
+    ripple.classList.remove('is-on'); void ripple.getBoundingClientRect(); ripple.classList.add('is-on');
+    box.dispatchEvent(new Event('zapvu:hit'));
+  };
+  const off = () => { dot.classList.remove('is-on'); tail.classList.remove('is-on'); };
 
-  let visible = true;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(box);
+  // ícone -> símbolo -> aviso
+  async function send(from, to) {
+    const my = ++token;
+    ping(from);
+    if (!(await travel(paths.get(from), true, 700, my))) return false;
+    hit();
+    await wait(160);
+    if (my !== token) return false;
+    if (!(await travel(paths.get(to), false, 700, my))) return false;
+    off();
+    ping(to);
+    return true;
+  }
 
-  let n = 0;
+  // qual aviso cada ícone acende: mensagens viram "Envio"; o resto alterna
+  const target = (n, i) => (chips.length > 1 ? chips[1 + (i % (chips.length - 1))] : chips[0]);
+
+  let hovering = false;
+  nodes.forEach((n, i) => {
+    n.addEventListener('pointerenter', () => { hovering = true; send(n, target(n, i)); });
+    n.addEventListener('pointerleave', () => { hovering = false; });
+  });
+
+  let k = 0;
   (async function loop() {
     await wait(1400);
     for (;;) {
-      if (!visible || document.hidden) { await wait(500); continue; }
-      const from = nodes[(n * 5 + 1) % nodes.length]; // pula pelos ícones sem repetir em sequência
-      const to = chips[n % chips.length];
-      n++;
-      if (!paths.get(from) || !paths.get(to)) { await wait(500); continue; }
-      ping(from);
-      await travel(paths.get(from), true, 750);   // do ícone até o símbolo
-      await wait(180);
-      await travel(paths.get(to), false, 750);    // do símbolo até o aviso
-      ping(to);
-      await wait(900);
+      if (!visible || document.hidden || hovering) { await wait(400); continue; }
+      const i = (k * 5 + 1) % nodes.length; // pula pelos ícones sem repetir em sequência
+      const to = chips[k % chips.length];
+      k++;
+      const ok = await send(nodes[i], to);
+      await wait(ok ? 1100 : 1600);
     }
   })();
 })();
