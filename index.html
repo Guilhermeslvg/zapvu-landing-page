@@ -243,64 +243,91 @@
             </div>
             </div>
             <div class="bt-pane bn-ins" role="tabpanel" id="bt-p1" aria-labelledby="bt-t1" hidden>
-              <ul class="bn-demo bn-inst" aria-hidden="true" data-bn-inst>
-              <li data-s="on"><i></i><b>loja-centro</b><small>+55 31 9 8888-7777</small><em><span data-c>1.284</span> msgs</em></li>
-              <li data-s="on"><i></i><b>suporte</b><small>+55 31 9 7777-1212</small><em><span data-c>862</span> msgs</em></li>
-              <li data-s="retry"><i></i><b>vendas-sp</b><small>+55 11 9 4444-3030</small><em>reconectando</em></li>
-              <li data-s="on"><i></i><b>financeiro</b><small>+55 31 9 6060-2525</small><em><span data-c>317</span> msgs</em></li>
-            </ul>
+              <div class="bx" aria-hidden="true">
+                <div class="bx-h"><b>Instâncias</b><span>escopo admin</span></div>
+                <div class="bx-stats"><span><b>4</b><small>números</small></span><span><b>3</b><small>conectados</small></span><span class="warn"><b>1</b><small>reconectando</small></span></div>
+                <ul class="bn-demo bn-inst" data-bn-inst>
+                  <li data-s="on"><span class="bx-av">LC</span><span class="bx-nm"><b>loja-centro</b><small>+55 31 9 8888-7777</small></span><i></i><em><span data-c>1.284</span> msgs</em><span class="bx-bar"><span style="--w:0.92"></span></span></li>
+                  <li data-s="on"><span class="bx-av">SP</span><span class="bx-nm"><b>suporte</b><small>+55 31 9 7777-1212</small></span><i></i><em><span data-c>862</span> msgs</em><span class="bx-bar"><span style="--w:0.62"></span></span></li>
+                  <li data-s="retry"><span class="bx-av">VS</span><span class="bx-nm"><b>vendas-sp</b><small>+55 11 9 4444-3030</small></span><i></i><em>—</em><span class="bx-bar"><span style="--w:0.25"></span></span></li>
+                  <li data-s="on"><span class="bx-av">FI</span><span class="bx-nm"><b>financeiro</b><small>+55 31 9 6060-2525</small></span><i></i><em><span data-c>317</span> msgs</em><span class="bx-bar"><span style="--w:0.23"></span></span></li>
+                </ul>
+              </div>
             </div>
             <div class="bt-pane bn-hook" role="tabpanel" id="bt-p2" aria-labelledby="bt-t2" hidden>
-              <div class="bn-demo bn-term" aria-hidden="true">
-              <div class="bn-term-head"><span></span><span></span><span></span><code>POST seu-sistema.com/webhook</code></div>
-              <ol data-bn-term></ol>
-            </div>
+              <div class="bx" aria-hidden="true">
+                <div class="bx-h"><b>Eventos recebidos</b><span>POST seu-sistema.com/webhook</span></div>
+                <div class="bx-chips"><span><i></i>HMAC-SHA256</span><span><i></i>reenvio até 12×</span><span><i></i>eventos guardados</span></div>
+                <div class="bn-demo bn-term"><ol data-bn-term></ol></div>
+                <pre class="bx-json" data-bn-json></pre>
+              </div>
             </div>
             <div class="bt-pane bn-sec" role="tabpanel" id="bt-p3" aria-labelledby="bt-t3" hidden>
-              <div class="bn-demo bn-auth" aria-hidden="true">
-              <div class="bn-req"><code><b>POST</b> /v1/messages/text</code><code>Authorization: Bearer zv_••••q2b7</code></div>
-              <ul class="bn-checks">
-                <li><i></i>chave válida</li>
-                <li><i></i>escopo: loja-centro</li>
-                <li><i></i>assinatura HMAC-SHA256</li>
-              </ul>
-              <span class="bn-ok">200 OK</span>
-            </div>
+              <div class="bx" aria-hidden="true">
+                <div class="bx-h"><b>Validação da requisição</b><span>a cada chamada</span></div>
+                <div class="bn-demo bn-auth">
+                  <div class="bn-req"><code><b>POST</b> /v1/messages/text</code><code>Authorization: Bearer zv_••••q2b7</code></div>
+                  <ol class="bn-checks">
+                    <li><i></i><span><b>Chave válida</b><small>o banco compara só o hash</small></span></li>
+                    <li><i></i><span><b>Escopo: loja-centro</b><small>a chave só enxerga este número</small></span></li>
+                    <li><i></i><span><b>Limite de requisições</b><small>dentro do permitido</small></span></li>
+                  </ol>
+                  <div class="bx-result"><span class="bn-ok">200 OK</span><span>mensagem aceita e na fila</span></div>
+                </div>
+              </div>
             </div>
             <div class="bt-pane bn-fila" role="tabpanel" id="bt-p4" aria-labelledby="bt-t4" hidden>
-              <div class="bn-demo bn-queue" aria-hidden="true">
-              <div class="bn-col"><span class="bn-col-h">pendente</span><ul data-bn-q="0"></ul></div>
-              <div class="bn-col"><span class="bn-col-h">processando</span><ul data-bn-q="1"></ul></div>
-              <div class="bn-col"><span class="bn-col-h">enviado</span><ul data-bn-q="2"></ul></div>
-            </div>
+              <div class="bx" aria-hidden="true">
+                <div class="bx-h"><b>Fila · loja-centro</b><span>gravada no PostgreSQL</span></div>
+                <div class="bn-demo bn-queue">
+                  <div class="bn-col"><span class="bn-col-h">pendente <em data-bn-qn="0">0</em></span><ul data-bn-q="0"></ul></div>
+                  <div class="bn-col"><span class="bn-col-h">processando <em data-bn-qn="1">0</em></span><ul data-bn-q="1"></ul></div>
+                  <div class="bn-col"><span class="bn-col-h">enviado <em data-bn-qn="2">0</em></span><ul data-bn-q="2"></ul></div>
+                </div>
+                <p class="bx-foot"><code>Idempotency-Key: pedido-4821</code> repetida → <span class="bx-dup">duplicada, ignorada</span></p>
+              </div>
             </div>
             <div class="bt-pane bn-rec" role="tabpanel" id="bt-p5" aria-labelledby="bt-t5" hidden>
-              <div class="bn-demo bn-link" aria-hidden="true" data-bn-rec data-s="on">
-              <div class="bn-link-row">
-                <span class="bn-end">Zapvu</span>
-                <span class="bn-wire"><i class="l"></i><i class="r"></i></span>
-                <span class="bn-end">WhatsApp</span>
+              <div class="bx" aria-hidden="true">
+                <div class="bx-h"><b>Conexão · loja-centro</b><span>reconexão automática</span></div>
+                <div class="bn-demo bn-link" data-bn-rec data-s="on">
+                  <div class="bn-link-row">
+                    <span class="bn-end"><img src="assets/brand/zapvu-simbolo.svg" alt="" width="313" height="440">Zapvu</span>
+                    <span class="bn-wire"><i class="l"></i><i class="r"></i></span>
+                    <span class="bn-end"><svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg>WhatsApp</span>
+                  </div>
+                  <p class="bn-state"><i></i><span data-bn-rec-t>conectado</span></p>
+                  <div class="bx-tries"><small>espera entre tentativas</small><ol class="bn-tries" data-bn-tries><li>1 s</li><li>2 s</li><li>4 s</li><li class="ok">ok</li></ol></div>
+                  <code class="bn-hook-ev">webhook → <span data-bn-rec-ev>connection.open</span></code>
+                </div>
               </div>
-              <p class="bn-state"><i></i><span data-bn-rec-t>conectado</span></p>
-              <ol class="bn-tries" data-bn-tries><li>1 s</li><li>2 s</li><li>4 s</li><li class="ok">ok</li></ol>
-              <code class="bn-hook-ev">webhook → <span data-bn-rec-ev>connection.open</span></code>
-            </div>
             </div>
             <div class="bt-pane bn-qr" role="tabpanel" id="bt-p6" aria-labelledby="bt-t6" hidden>
-              <div class="bn-demo bn-scan" aria-hidden="true">
-              <div class="bn-qrbox"><img src="assets/img/qr.svg" alt="" width="120" height="120"><span class="bn-beam"></span><span class="bn-done"><svg class="bn-tk" viewBox="0 0 18 11"><path d="M1 6l3.2 3.2L11 2"/><path d="M7.2 9.2 7.6 9.6 15 2"/></svg></span></div>
-              <code class="bn-pair">K7Q2-M9XA</code>
-            </div>
+              <div class="bx bx-row" aria-hidden="true">
+                <div class="bn-demo bn-scan">
+                  <div class="bn-qrbox"><img src="assets/img/qr.svg" alt="" width="120" height="120"><span class="bn-beam"></span><span class="bn-done"><svg class="bn-tk" viewBox="0 0 18 11"><path d="M1 6l3.2 3.2L11 2"/><path d="M7.2 9.2 7.6 9.6 15 2"/></svg></span></div>
+                </div>
+                <div class="bx-qr">
+                  <b>Conecte seu número</b>
+                  <ol><li>Abra o WhatsApp no celular</li><li>Toque em Aparelhos conectados</li><li>Aponte a câmera para o QR</li></ol>
+                  <p>ou digite o código <code class="bn-pair">K7Q2-M9XA</code></p>
+                  <p class="bx-qrst"><i></i><span class="a">aguardando leitura</span><span class="b">conectado ✓</span></p>
+                </div>
+              </div>
             </div>
             <div class="bt-pane bn-mon" role="tabpanel" id="bt-p7" aria-labelledby="bt-t7" hidden>
-              <div class="bn-demo bn-dash" aria-hidden="true">
-              <div class="bn-kpis">
-                <span><small>instâncias</small><b>4/4</b></span>
-                <span><small>na fila</small><b data-bn-kq>12</b></span>
-                <span><small>msgs/min</small><b data-bn-km>86</b></span>
+              <div class="bx" aria-hidden="true">
+                <div class="bx-h"><b>Visão geral</b><span>últimos 30 min</span></div>
+                <div class="bn-demo bn-dash">
+                  <div class="bn-kpis">
+                    <span><small>instâncias</small><b>4/4</b><em>conectadas</em></span>
+                    <span><small>na fila</small><b data-bn-kq>12</b><em>aguardando envio</em></span>
+                    <span><small>msgs/min</small><b data-bn-km>86</b><em>enviadas agora</em></span>
+                  </div>
+                  <div class="bx-chart"><span class="bx-y"><i>120</i><i>60</i><i>0</i></span><div class="bn-chart" data-bn-chart><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+                  <p class="bx-legend"><i></i>mensagens por minuto<span>métricas via Prometheus</span></p>
+                </div>
               </div>
-              <div class="bn-chart" data-bn-chart><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
             </div>
           </div>
         </div>

@@ -63,7 +63,7 @@
     counts.forEach((c) => { if (Math.random() < 0.6) c.textContent = (parseInt(c.textContent.replace('.', ''), 10) + 1).toLocaleString('pt-BR'); });
     tick++;
     if (tick % 8 === 4) { const r = rows[2]; r.dataset.s = 'on'; r.querySelector('em').innerHTML = '<span data-c>45</span> msgs'; }
-    if (tick % 8 === 0) { const r = rows[2]; r.dataset.s = 'retry'; r.querySelector('em').textContent = 'reconectando'; }
+    if (tick % 8 === 0) { const r = rows[2]; r.dataset.s = 'retry'; r.querySelector('em').textContent = '—'; }
   }
 
   /* 03 webhooks: eventos chegando no terminal */
@@ -72,7 +72,11 @@
   let ei = 0;
   function hookStep() {
     const li = document.createElement('li');
-    li.innerHTML = `<time>${now()}</time><b>${EV[ei++ % EV.length]}</b><em>✓ assinado</em>`;
+    const ev = EV[ei++ % EV.length];
+    li.innerHTML = `<time>${now()}</time><b>${ev}</b><em>✓ assinado</em>`;
+    const js = bn.querySelector('[data-bn-json]');
+    if (js) js.innerHTML = `{ <span class="k">"event"</span>: <span class="v">"${ev}"</span>, <span class="k">"instance"</span>: <span class="v">"loja-centro"</span>,
+  <span class="k">"signature"</span>: <span class="v">"sha256=9f2c…e81a"</span> }`;
     term.appendChild(li); enter(li);
     while (term.children.length > 6) term.firstElementChild.remove();
   }
@@ -99,6 +103,7 @@
     // entra uma nova; a cada 4, uma chamada repetida é reconhecida
     const fresh = qt % 4 === 0 ? item(qn - 1, 'duplicada', 'dup') : item(qn++);
     cols[0].appendChild(fresh); enter(fresh);
+    cols.forEach((c, k) => { const n = bn.querySelector(`[data-bn-qn="${k}"]`); if (n) n.textContent = c.children.length; });
   }
 
   /* 06 reconexão */
