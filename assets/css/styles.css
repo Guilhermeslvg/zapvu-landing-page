@@ -170,10 +170,8 @@ code { font-family: var(--mono); }
 
 .nav-links {
   display: flex;
-  flex: 1;
-  justify-content: space-between;
   gap: 28px;
-  margin: 0 24px 0 8px;
+  margin: 0 8px 0 auto;
   padding: 0;
   list-style: none;
   font-size: 14px;
@@ -182,7 +180,7 @@ code { font-family: var(--mono); }
 }
 .nav-links a { transition: color 0.2s var(--ease); }
 .nav-links a:hover { color: var(--text); }
-.nav-actions { display: flex; align-items: center; gap: 14px; margin-left: auto; }
+.nav-actions { display: flex; align-items: center; gap: 14px; }
 .nav-login { font-size: 14px; font-weight: 500; color: var(--text-2); }
 .nav-login:hover { color: var(--text); }
 
@@ -655,6 +653,7 @@ code { font-family: var(--mono); }
 
 @media (max-width: 960px) {
   .nav { gap: 12px; }
+  .nav-actions { margin-left: auto; }
   .nav-menu {
     display: grid; place-content: center; gap: 5px;
     width: 40px; height: 40px;
