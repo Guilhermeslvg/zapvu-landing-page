@@ -618,17 +618,31 @@ code { font-family: var(--mono); }
   background: var(--lime);
   color: var(--olive);
 }
+.cta-box {
+  width: calc(100% - 48px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: 56px;
+}
+.cta-copy { position: relative; z-index: 1; }
+.cta-kicker { margin: 0 0 16px; font: 600 12px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
 .cta-box h2 { max-width: 14ch; }
-.cta-box p { max-width: 44ch; margin: 18px 0 32px; font-size: 18px; line-height: 1.55; }
+.cta-sub { max-width: 44ch; margin: 18px 0 32px; font-size: 18px; line-height: 1.5; }
+.cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+.cta-link { font-weight: 600; font-size: 15px; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+.cta-link:hover { text-decoration-thickness: 2.5px; }
+.cta-link:focus-visible, .cta-box .btn:focus-visible { outline-color: var(--olive); }
+
 .cta-symbol {
   position: absolute;
-  right: -40px;
-  bottom: -70px;
-  width: 340px;
+  right: 9%;
+  top: 50%;
+  width: 230px;
   height: auto;
+  translate: 0 -50%;
   filter: brightness(0) saturate(100%) invert(10%) sepia(26%) saturate(1500%) hue-rotate(30deg);
-  opacity: 0.12;
-  rotate: -12deg;
+  rotate: -8deg;
 }
 
 /* Rodapé */
@@ -745,7 +759,9 @@ code { font-family: var(--mono); }
   .sec-item:nth-child(2n) { padding-left: 0; border-left: 0; }
   .price { padding: 24px; }
   .cta-box { padding: 48px 24px; border-radius: 24px; }
-  .cta-box .btn { width: 100%; }
+  .cta-box .btn { width: 100%; justify-content: center; }
+  .cta-box { width: calc(100% - 32px); }
+  .cta-actions { flex-direction: column; gap: 18px; }
   .cta-symbol { width: 220px; right: -50px; bottom: -40px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
@@ -1398,4 +1414,10 @@ main { position: relative; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
   .js .hero-copy > *, .js .hero-visual { opacity: 1; translate: 0 0; }
+}
+
+/* CTA final: em telas médias o símbolo volta a ser marca-d'água no canto */
+@media (max-width: 960px) {
+  .cta-box { grid-template-columns: 1fr; }
+  .cta-symbol { top: auto; right: -40px; bottom: -70px; width: 300px; translate: none; rotate: -12deg; opacity: 0.12; }
 }
